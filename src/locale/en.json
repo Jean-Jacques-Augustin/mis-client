@@ -1,0 +1,11 @@
+{
+  "greeting": "Hello",
+  "farewell": "Goodbye",
+  "category": "Category",
+  "add_category": "Add Category",
+  "return": "Return",
+  "new_category": "New Category",
+  "description": "Description",
+  "name": "Name",
+  "save": "Save"
+}

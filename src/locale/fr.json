@@ -1,0 +1,11 @@
+{
+  "greeting": "Bonjour",
+  "farewell": "Au revoir",
+  "category": "Categorie",
+  "add_category": "Ajouter une categorie",
+  "return": "Retour",
+  "new_category": "Nouvelle categorie",
+  "description": "Description",
+  "name": "Nom",
+  "save": "Sauvegarder"
+}
