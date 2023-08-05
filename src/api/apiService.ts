@@ -6,8 +6,10 @@ import axios from 'axios';
  * @Usage: import api from 'path/to/apiService.ts'
  */
 
+export const baseURL = 'http://localhost:4000';
+
 const api = axios.create({
-    baseURL: 'http://localhost:4000',
+    baseURL: baseURL,
 });
 
 export default api;

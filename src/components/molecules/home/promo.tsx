@@ -1,7 +1,8 @@
 import {Box, Container, Grid, Typography} from "@mui/material";
-import ProductCard from "../../atoms/ProductCard";
+import ProductCard from "../../atoms/product/ProductCard";
 import FadeSlider from "../../atoms/FadeSlider";
 import CardSlide from "../CardSlide";
+import SimpleSlider from "../CardSlide";
 
 interface Products {
     _id: string;
@@ -50,7 +51,7 @@ const PromotionTab = () => {
                 Promotion Tab Content
             </Typography>
             <Container>
-               <CardSlide />
+               <SimpleSlider />
             </Container>
         </Box>
     );

@@ -9,6 +9,7 @@ interface CustomTextFieldProps {
     value: string;
     name: string;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    multiline?: boolean;
 }
 
 const CustomTextFieldWrapper = styled('div')(({ theme }: { theme: Theme }) => ({
@@ -38,6 +39,8 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
     onChange,
     value,
     name,
+    multiline = false,
+    required = false,
 }) => {
     return (
         <CustomTextFieldWrapper>
@@ -49,8 +52,10 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
                 onChange={onChange}
                 fullWidth
                 margin="normal"
-
                 variant="outlined"
+                rows={multiline ? 4 : 1}
+                multiline={multiline}
+                required={required}
             />
         </CustomTextFieldWrapper>
     );

@@ -7,5 +7,16 @@
   "new_category": "Sokajy vaovao",
   "description": "Famaritana",
   "name": "Anarana",
-  "save": "Tehirizina"
+  "save": "Tehirizina",
+  "cancel": "Averina",
+  "edit": "Hanova",
+  "delete": "Hamafa",
+  "add": "Hanampy",
+  "add_new": "Hanampy vaovao",
+  "actions": "Hetsika",
+  "products": "Vokatra",
+  "product": "Vokatra",
+  "add_product": "Hanampy vokatra",
+  "new_product": "Vokatra vaovao",
+  "edit_product": "Hanova vokatra"
 }

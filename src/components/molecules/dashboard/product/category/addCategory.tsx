@@ -1,14 +1,19 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
-import Box from "@mui/material/Box";
 import PageHeader from "../../../../atoms/PageHeader";
 import {FormattedMessage} from "react-intl";
 import {Button} from "@mui/material";
 import CustomTextField from "../../../../atoms/CustomTextField";
 import {makeStyles} from "@mui/styles";
 import Card from "@mui/material/Card";
-import axios from "axios";
 import api from "../../../../../api/apiService";
+
+
+export const languageList = [
+    {code: 'fr', label: 'FR'},
+    {code: 'en', label: 'EN'},
+    {code: 'mg', label: 'MG'},
+];
 
 interface LanguageData {
     [key: string]: string;
@@ -71,17 +76,12 @@ const AddCategory: React.FC = () => {
         console.log(response);
     }
 
-    const languageList = [
-        {code: 'fr', label: 'FR'},
-        {code: 'en', label: 'EN'},
-        {code: 'mg', label: 'MG'},
-    ];
 
     return (
         <div>
             <PageHeader title={"add_category"} buttonLabel={"return"}/>
 
-            <Card component="form" className={classes.formContainer}>
+            <Card variant={'outlined'} sx={{p: 2}} component="form" className={classes.formContainer}>
 
                 <Typography variant="h6" align="left">
                     <FormattedMessage id={"name"}/>
@@ -110,7 +110,7 @@ const AddCategory: React.FC = () => {
                 </div>
             </Card>
 
-            <Card
+            <Card variant={'outlined'} sx={{p: 2}}
                 component="form"
                 className={classes.formContainer}
             >

@@ -188,13 +188,3 @@ export default function Dashboard() {
         </Box>
     );
 }
-
-
-export function DashboardRoutes() {
-    return (
-        <Routes>
-            <Route path="/" element={<h1>Tableau de bord</h1>}/>
-            <Route path="/users" element={<Category/>}/>
-        </Routes>
-    );
-}

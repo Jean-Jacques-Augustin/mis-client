@@ -7,5 +7,16 @@
   "new_category": "Nouvelle categorie",
   "description": "Description",
   "name": "Nom",
-  "save": "Sauvegarder"
+  "save": "Sauvegarder",
+  "cancel": "Annuler",
+  "edit": "Editer",
+  "delete": "Supprimer",
+  "add": "Ajouter",
+  "add_new": "Ajouter un nouveau",
+  "actions": "Actions",
+  "products": "Produits",
+  "product": "Produit",
+  "add_product": "Ajouter un produit",
+  "new_product": "Nouveau produit",
+  "edit_product": "Editer un produit"
 }
