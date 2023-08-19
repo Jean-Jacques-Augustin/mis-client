@@ -1,69 +1,89 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import {baseURL} from "../../../api/apiService";
 
-interface ProductCardProps {
-    product: Products;
-}
-
-interface Products {
-    _id: string;
-    name: string;
-    price: number;
-    description: string;
-    category: string;
-    image: string;
-    quantity: number;
-}
-
-const StyledListItem = styled(ListItem)`
-  border: 1px solid #f0f0f0;
+const StyledCard = styled(Card)`
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
   transition: transform 0.3s ease;
 
   &:hover {
     transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 `;
 
-const ProductName = styled(ListItemText)`
-  font-size: 1.2rem;
-  font-weight: 500;
+const ProductImage = styled.img`
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px 0 0 10px;
 `;
 
-const ProductDescription = styled(ListItemText)`
-  font-size: 1rem;
-  color: #555;
+const ProductInfo = styled.div`
+  flex: 1;
+  padding: 16px;
 `;
 
-const ProductPrice = styled(ListItemText)`
-  font-size: 1rem;
+const ProductName = styled(Typography)`
+  font-size: 1.4rem;
   font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
 `;
 
-const ProductList: React.FC<ProductCardProps> = ({product}) => {
-    const {name, description, price} = product;
+const ProductDescription = styled(Typography)`
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 12px;
+`;
+
+const ProductPrice = styled(Typography)`
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #007bff;
+`;
+
+const ProductQuantity = styled(Typography)`
+  font-size: 1rem;
+  color: #888;
+`;
+
+const CartButton = styled(IconButton)`
+  margin-left: auto;
+`;
+
+const ProductList: React.FC<{ product: any }> = ({product}) => {
+    const {name, description, price, quantity} = product;
 
     return (
-        <StyledListItem>
-            <img src={product.image} alt={product.name} style={{width: '100px', marginRight: '16px'}}/>
-            <div style={{flex: 1}}>
-                <ProductName primary={name}/>
-                <ProductDescription primary={description}/>
-                <ProductPrice primary={`Price: $${price}`}/>
-            </div>
-            <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="Add to Cart">
-                    <AddShoppingCartIcon/>
-                </IconButton>
-            </ListItemSecondaryAction>
-        </StyledListItem>
+        <StyledCard>
+            <ProductImage crossOrigin="anonymous" src={`${baseURL}/${product.image}`} alt={product.name}/>
+            <ProductInfo>
+                <ProductName variant="h6">
+                    {name}
+                </ProductName>
+                <ProductDescription variant="body1">
+                    {description}
+                </ProductDescription>
+                <ProductPrice variant="body1">
+                    ${price}
+                </ProductPrice>
+                <ProductQuantity variant="body2">
+                    Quantity: {quantity}
+                </ProductQuantity>
+            </ProductInfo>
+            <CartButton edge="end" aria-label="Add to Cart">
+                <AddShoppingCartIcon/>
+            </CartButton>
+        </StyledCard>
     );
 };
 

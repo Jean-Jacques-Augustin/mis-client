@@ -1,38 +1,49 @@
 import * as React from 'react';
 import ProductList from '../../../atoms/product/ProductList';
 import PageHeader from "../../../atoms/PageHeader";
-import {Box} from '@mui/material';
-// Assuming this is the path to your ProductList component
-
-// Dummy product data
-const dummyData = [
-    {
-        _id: '1',
-        name: 'Product 1',
-        price: 10.99,
-        description: 'This is the first product description.',
-        category: 'Category 1',
-        image: 'https://via.placeholder.com/150',
-        quantity: 50,
-    },
-    {
-        _id: '2',
-        name: 'Product 2',
-        price: 19.99,
-        description: 'This is the second product description.',
-        category: 'Category 2',
-        image: 'https://via.placeholder.com/150',
-        quantity: 30,
-    },
-];
+import { Box } from '@mui/material';
+import { useGetAllProductQuery } from "../../../../store/apiSlice";
+import {useIntl} from "react-intl";
 
 const ProductListPage: React.FC = () => {
+    const { data: products, isLoading, error } = useGetAllProductQuery();
+    const intl = useIntl();
+    if (isLoading) return <div>Loading...</div>;
+
+    if (error) return <div>Error: {"message" in error ? error.message : 'Erreur'}</div>;
+
+    const data = products?.data || [];
+
+    const processedData = data.map((product: any) => {
+        const parsedName = JSON.parse(product?.name || '{}');
+        const parsedDescription = JSON.parse(product?.description || '{}');
+
+
+        const locale = intl.locale;
+
+        console.log(locale);
+
+        return {
+            _id: product?._id || '',
+            name: parsedName[locale] || '',
+            price: product?.price || 0,
+            description: parsedDescription[locale] || '',
+            category: product?.category || '', // No need for JSON parsing as category is not in localized format
+            image: product?.image || '',
+            quantity: product?.quantity || 0,
+        };
+    });
+
+    console.log(processedData);
+
     return (
         <Box>
-            <PageHeader title="products" buttonLabel="add_product" buttonColor="primary" to="/dashboard/addProduct"/>
+            <PageHeader title="products" buttonLabel="add_product" buttonColor="primary" to="/dashboard/addProduct" />
 
-            {dummyData.map((product) => (
-                <ProductList key={product._id} product={product}/>
+            {processedData.map((product:any) => (
+                <div key={product._id}>
+                    <ProductList product={product} />
+                </div>
             ))}
         </Box>
     );

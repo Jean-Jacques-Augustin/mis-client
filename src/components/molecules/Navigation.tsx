@@ -1,28 +1,44 @@
 import React from "react";
-import { AppBar, Container, Toolbar, Typography, IconButton } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"; // Import de l'icône de panier
+import {AppBar, Container, Toolbar, Typography, IconButton} from "@mui/material";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import {StyledAppBar, StyledLink, StyledToolbar} from "./WithStyled";
+
+
+
 
 export default function Navigation() {
     return (
-        <AppBar color="default" elevation={0} variant="outlined" position={"sticky"}>
+        <StyledAppBar color="default" elevation={0} variant="outlined" position={"sticky"}>
             <Container>
-                <Toolbar
-                    sx={{
-                        justifyContent: "space-between",
-                        overflowX: "auto",
-                    }}
-                >
-                    <Typography variant="h6" component="div">
+                <StyledToolbar>
+                    <StyledLink to={"/"}>
                         Home
-                    </Typography>
-                    <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", alignItems: "center" }}>
-                        <Typography variant="h6">Login</Typography>
+                    </StyledLink>
+
+                    <div style={{display: "flex", gap: "1rem", alignItems: "center"}}>
+                        <StyledLink to={""}>
+                            Catalogue
+                        </StyledLink>
+                        <StyledLink to={"/catalogue"}>
+                            Promotion
+                        </StyledLink>
+                        <StyledLink to={"/catalogue"}>
+                            Contact
+                        </StyledLink>
+                    </div>
+
+                    <div style={{display: "flex", gap: "1rem", alignItems: "center"}}>
+                        <StyledLink
+                            to="/login"
+                        >
+                            Login
+                        </StyledLink>
                         <IconButton color="inherit" aria-label="Panier">
-                            <ShoppingCartIcon />
+                            <ShoppingCartIcon/>
                         </IconButton>
                     </div>
-                </Toolbar>
+                </StyledToolbar>
             </Container>
-        </AppBar>
+        </StyledAppBar>
     );
 }

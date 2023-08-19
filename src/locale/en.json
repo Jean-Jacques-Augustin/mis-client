@@ -18,5 +18,13 @@
   "product": "Product",
   "add_product": "Add Product",
   "new_product": "New Product",
-  "edit_product": "Edit Product"
+  "edit_product": "Edit Product",
+  "product_exists": "Product already exists",
+  "product_added": "Product added",
+  "product_updated": "Product updated",
+  "product_deleted": "Product deleted",
+  "product_name": "Product Name",
+  "product_description": "Product Description",
+  "product_price": "Product Price",
+  "home": "Home"
 }

@@ -111,8 +111,8 @@ const AddCategory: React.FC = () => {
             </Card>
 
             <Card variant={'outlined'} sx={{p: 2}}
-                component="form"
-                className={classes.formContainer}
+                  component="form"
+                  className={classes.formContainer}
             >
                 <Typography variant="h6" align="left">
                     <FormattedMessage id={"description"}/>

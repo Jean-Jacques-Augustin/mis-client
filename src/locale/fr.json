@@ -18,5 +18,12 @@
   "product": "Produit",
   "add_product": "Ajouter un produit",
   "new_product": "Nouveau produit",
-  "edit_product": "Editer un produit"
+  "edit_product": "Editer un produit",
+  "product_exists": "Ce produit existe deja",
+  "product_added": "Produit ajoute avec succes",
+  "product_updated": "Produit mis a jour avec succes",
+  "product_deleted": "Produit supprimé avec succes",
+  "product_name": "Nom du produit",
+  "product_description": "Description du produit",
+  "product_price": "Prix du produit"
 }

@@ -10,6 +10,8 @@ import Categories from './components/molecules/dashboard/product/category/catego
 import AddCategory from './components/molecules/dashboard/product/category/addCategory'
 import ProductListPage from "./components/molecules/dashboard/product/Products";
 import AddProduct from "./components/molecules/dashboard/product/AddProduct";
+import Login from "./pages/Login";
+import Catalog from "./pages/catalog";
 
 function App() {
     return (
@@ -18,7 +20,9 @@ function App() {
             <Routes>
                 <Route path='/' element={<Index/>}/>
                 <Route path='/signup' element={<SignUp/>}/>
+                <Route path='/login' element={<Login/>}/>
                 <Route path='/confirm' element={<EmailConfirmation/>}/>
+                <Route path='/catalogue' element={<Catalog/>}/>
                 <Route path='/dashboard' element={<Dashboard/>}>
                     <Route path='*' element={<h1>Dashboard</h1>}/>
                     <Route path='category' element={<Categories/>}/>

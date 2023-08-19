@@ -18,5 +18,12 @@
   "product": "Vokatra",
   "add_product": "Hanampy vokatra",
   "new_product": "Vokatra vaovao",
-  "edit_product": "Hanova vokatra"
+  "edit_product": "Hanova vokatra",
+  "product_exists": "Vokatra efa misy",
+  "product_added": "Fampidirana vokatra natao",
+  "product_updated": "Vokatra voaova",
+  "product_deleted": "Vokatra voafafa",
+  "product_name": "Anarana vokatra",
+  "product_description": "Famaritana vokatra",
+  "product_price": "Vidin'ny vokatra"
 }

@@ -1,28 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Container, Grid, Typography, Snackbar } from '@mui/material';
 import CustomTextField from '../components/atoms/CustomTextField';
 import api from '../api/apiService';
 
-interface FormData {
-    name: string;
+interface LoginForm {
     email: string;
     password: string;
-    confirmPassword: string;
 }
 
-const SignUp: React.FC = () => {
-    const [formData, setFormData] = useState<FormData>({
-        name: '',
+const Login: React.FC = () => {
+    const [loginForm, setLoginForm] = useState<LoginForm>({
         email: '',
         password: '',
-        confirmPassword: '',
-    });
-
-    const [errors, setErrors] = useState<Record<keyof FormData, string>>({
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
     });
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -30,77 +19,41 @@ const SignUp: React.FC = () => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-        setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
-    };
-
-    const clearErrors = () => {
-        setErrors({
-            name: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-        });
+        setLoginForm((prevLoginForm) => ({ ...prevLoginForm, [name]: value }));
     };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const { name, email, password, confirmPassword } = formData;
+        const { email, password } = loginForm;
 
-        const errors: Partial<FormData> = {};
-        if (!name) {
-            errors.name = 'Ce champ est requis';
-        }
-        if (!email) {
-            errors.email = 'Ce champ est requis';
-        }
-        if (!password) {
-            errors.password = 'Ce champ est requis';
-        }
-        if (!confirmPassword) {
-            errors.confirmPassword = 'Ce champ est requis';
-        }
-        if (password !== confirmPassword) {
-            errors.confirmPassword = 'Les mots de passe ne correspondent pas';
-        }
+        try {
+            const response = await api.post('/login', {
+                email,
+                password,
+            });
 
-        setErrors(errors as Record<keyof FormData, string>);
+            console.log(response.status);
 
-        if (Object.keys(errors).length === 0) {
-            try {
-                const response = await api.post('/users', {
-                    name,
-                    email,
-                    password,
-                });
+            // Handle successful login here
 
-                console.log(response.status);
+            setSnackbarMessage('Connexion réussie !');
+            setSnackbarOpen(true);
 
-                clearErrors();
-                setSnackbarMessage('Inscription réussie !');
-                setSnackbarOpen(true);
+            // Reset login form (optional)
+            setLoginForm({
+                email: '',
+                password: '',
+            });
+        } catch (error: any) {
+            console.log(error.response.status);
 
-                // Reset form data after successful submission (optional)
-                setFormData({
-                    name: '',
-                    email: '',
-                    password: '',
-                    confirmPassword: '',
-                });
-            } catch (error: any) {
-                console.log(error.response.status);
-
-                if (error.response.status === 409) {
-                    console.log(error.response.data);
-                    setSnackbarMessage(error.response.data.message);
-                } else if (error.response.status === 422) {
-                    console.log(error.response.data);
-                    setSnackbarMessage(error.response.data.message);
-                }
-
-                setSnackbarOpen(true);
+            if (error.response.status === 401) {
+                console.log(error.response.data);
+                setSnackbarMessage(error.response.data.message);
             }
+
+            setSnackbarOpen(true);
         }
     };
 
@@ -122,52 +75,29 @@ const SignUp: React.FC = () => {
                         p={3}
                     >
                         <Typography variant="h5" gutterBottom>
-                            Inscription
+                            Connexion
                         </Typography>
                         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} md={12}>
                                     <CustomTextField
-                                        label="Nom"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                    {errors.name && <div style={{ color: 'red' }}>{errors.name}</div>}
-                                </Grid>
-                                <Grid item xs={12} md={12}>
-                                    <CustomTextField
                                         label="Adresse Email"
                                         type="email"
                                         name="email"
-                                        value={formData.email}
+                                        value={loginForm.email}
                                         onChange={handleChange}
                                         required
                                     />
-                                    {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
                                 </Grid>
-                                <Grid item xs={12} md={6}>
+                                <Grid item xs={12} md={12}>
                                     <CustomTextField
                                         label="Mot de passe"
                                         type="password"
                                         name="password"
-                                        value={formData.password}
+                                        value={loginForm.password}
                                         onChange={handleChange}
                                         required
                                     />
-                                    {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
-                                </Grid>
-                                <Grid item xs={12} md={6}>
-                                    <CustomTextField
-                                        label="Confirmez le mot de passe"
-                                        type="password"
-                                        name="confirmPassword"
-                                        value={formData.confirmPassword}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                    {errors.confirmPassword && <div style={{ color: 'red' }}>{errors.confirmPassword}</div>}
                                 </Grid>
                             </Grid>
                             <Button
@@ -177,7 +107,7 @@ const SignUp: React.FC = () => {
                                 fullWidth
                                 style={{ marginTop: 16 }}
                             >
-                                S'inscrire
+                                Se connecter
                             </Button>
                         </form>
                     </Box>
@@ -189,15 +119,9 @@ const SignUp: React.FC = () => {
                 autoHideDuration={6000}
                 onClose={handleSnackbarClose}
                 message={snackbarMessage}
-
-                action={
-                    <Button color="secondary" size="small" onClick={handleSnackbarClose}>
-                        Passer au login
-                    </Button>
-                }
             />
         </Container>
     );
 };
 
-export default SignUp;
+export default Login;

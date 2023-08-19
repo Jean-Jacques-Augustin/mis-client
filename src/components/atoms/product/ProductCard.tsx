@@ -25,17 +25,13 @@ interface Products {
 const StyledCard = styled(Card)`
   width: 345px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  border-radius: 15px;
   overflow: hidden;
   transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-  }
 `;
 
 const StyledCardMedia = styled(CardMedia)`
-  height: 140px;
+  height: 200px;
 `;
 
 const CardContentWrapper = styled(CardContent)`
@@ -65,14 +61,14 @@ const StyledCardActions = styled(CardActions)`
   display: flex;
   justify-content: space-between;
   padding: 16px;
-  background-color: #f5f5f5;
+  gap: 10px;
 `;
 
 const StyledButton = styled(Button)`
   background-color: #ff9800;
   color: #fff;
   font-weight: 600;
-  text-transform: uppercase;
+  text-transform: 'none';
 
   &:hover {
     background-color: #f57c00;
@@ -104,10 +100,22 @@ const ProductCard: React.FC<ProductCardProps> = ({product}) => {
                 </ProductPrice>
             </CardContentWrapper>
             <StyledCardActions>
-                <ShareButton size="small">Share</ShareButton>
-                <Button size="small">Learn More</Button>
-                <StyledButton size="small" startIcon={<AddShoppingCartIcon/>}>
-                    Add to Cart
+                <StyledButton size="medium"
+                              disableElevation
+                              fullWidth
+                              style={{
+                                  textTransform: "none",
+                              }}
+                              variant={"contained"}
+                >Learn More</StyledButton>
+                <StyledButton
+                    fullWidth
+                    style={{
+                        textTransform: "none",
+                    }}
+                    variant={"outlined"}
+                    size="medium" startIcon={<AddShoppingCartIcon/>}>
+                    Add to cart
                 </StyledButton>
             </StyledCardActions>
         </StyledCard>

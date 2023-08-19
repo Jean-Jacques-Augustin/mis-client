@@ -1,5 +1,6 @@
 import React from "react";
 import {Box, Typography} from "@mui/material";
+import {baseURL} from "../../api/apiService";
 
 interface ProductCartProps {
     imageSrc: string;
@@ -8,13 +9,12 @@ interface ProductCartProps {
 }
 
 const PubProduct: React.FC<ProductCartProps> = ({
-                                                     imageSrc,
-                                                     productName,
-                                                     productDescription,
-                                                 }) => {
+                                                    imageSrc,
+                                                    productName,
+                                                    productDescription,
+                                                }) => {
     return (
         <Box
-            boxShadow={3}
             borderRadius={2}
             p={2}
             style={{
@@ -23,13 +23,12 @@ const PubProduct: React.FC<ProductCartProps> = ({
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
-                marginBottom : "20px",
+                marginBottom: "20px",
             }}
         >
             {/* Image du produit (utilisez l'URL réelle du produit si disponible, sinon utilisez le placeholder) */}
             <img
-                src={imageSrc}
-                alt="Product Image"
+                crossOrigin="anonymous" src={`${baseURL}/${imageSrc}`} alt={productName}
                 style={{
                     height: 600,
                     width: "50%",
