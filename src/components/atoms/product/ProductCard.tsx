@@ -7,24 +7,14 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import {useIntl} from "react-intl";
+import {Product, ProductState} from "../../../interfaces/ProductInterface";
+import {baseURL} from "../../../api/apiService";
+import {Container} from "@mui/material";
 
-interface ProductCardProps {
-    product: Products;
-}
-
-interface Products {
-    _id: string;
-    name: string;
-    price: number;
-    description: string;
-    category: string;
-    image: string;
-    quantity: number;
-}
 
 const StyledCard = styled(Card)`
-  width: 345px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   overflow: hidden;
   transition: transform 0.3s ease;
@@ -68,7 +58,6 @@ const StyledButton = styled(Button)`
   background-color: #ff9800;
   color: #fff;
   font-weight: 600;
-  text-transform: 'none';
 
   &:hover {
     background-color: #f57c00;
@@ -79,47 +68,53 @@ const ShareButton = styled(Button)`
   color: #777;
 `;
 
-const ProductCard: React.FC<ProductCardProps> = ({product}) => {
-    const {name, description, price} = product;
+const ProductCard: React.FC<ProductState> = ({product, onSlide}) => {
+	const intl = useIntl();
+	const lang = intl.locale;
 
-    return (
-        <StyledCard>
-            <StyledCardMedia
-                image={product.image}
-                title={product.name}
-            />
-            <CardContentWrapper>
-                <ProductName gutterBottom variant="h5">
-                    {name}
-                </ProductName>
-                <ProductDescription variant="body2" color="text.secondary">
-                    {description}
-                </ProductDescription>
-                <ProductPrice variant="body2" color="text.secondary">
-                    Price: ${price}
-                </ProductPrice>
-            </CardContentWrapper>
-            <StyledCardActions>
-                <StyledButton size="medium"
-                              disableElevation
-                              fullWidth
-                              style={{
-                                  textTransform: "none",
-                              }}
-                              variant={"contained"}
-                >Learn More</StyledButton>
-                <StyledButton
-                    fullWidth
-                    style={{
-                        textTransform: "none",
-                    }}
-                    variant={"outlined"}
-                    size="medium" startIcon={<AddShoppingCartIcon/>}>
-                    Add to cart
-                </StyledButton>
-            </StyledCardActions>
-        </StyledCard>
-    );
+	return (
+
+		<StyledCard
+			style={{
+				margin: onSlide ? "10px" : "auto",
+			}}
+		>
+			<StyledCardMedia
+				image={`${baseURL}/${product.image}`}
+			/>
+			<CardContentWrapper>
+				<ProductName gutterBottom variant="h5">
+					{product.name?.locale}
+				</ProductName>
+				<ProductDescription variant="body2" color="text.secondary">
+					{product.description.lang}
+				</ProductDescription>
+				<ProductPrice variant="body2" color="text.secondary">
+					Price: ${product.price}
+				</ProductPrice>
+			</CardContentWrapper>
+			<StyledCardActions>
+				<StyledButton size="medium"
+							  disableElevation
+							  fullWidth
+							  style={{
+								  textTransform: "none",
+							  }}
+							  variant={"contained"}
+				>Learn More</StyledButton>
+				<StyledButton
+					fullWidth
+					style={{
+						textTransform: "none",
+					}}
+					variant={"outlined"}
+					size="medium" startIcon={<AddShoppingCartIcon/>}>
+					Add to cart
+				</StyledButton>
+			</StyledCardActions>
+		</StyledCard>
+
+	);
 };
 
 export default ProductCard;

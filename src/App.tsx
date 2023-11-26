@@ -30,7 +30,6 @@ function App() {
                     <Route path='product' element={<ProductListPage/>}/>
                     <Route path='addProduct' element={<AddProduct/>}/>
                 </Route>
-                <Route path='*' element={<h1>404</h1>}/>
             </Routes>
         </div>
     )

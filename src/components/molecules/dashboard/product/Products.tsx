@@ -28,7 +28,7 @@ const ProductListPage: React.FC = () => {
             name: parsedName[locale] || '',
             price: product?.price || 0,
             description: parsedDescription[locale] || '',
-            category: product?.category || '', // No need for JSON parsing as category is not in localized format
+            category: product?.category || '',
             image: product?.image || '',
             quantity: product?.quantity || 0,
         };

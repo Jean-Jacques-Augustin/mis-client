@@ -24,40 +24,40 @@ const StyledButton = styled(Button)<{ color?: string }>`
 `;
 
 interface Element {
-    name: string;
-    description: string;
+	name: string;
+	description: string;
 }
 
 interface Actions {
-    onEdit: (dessert: Element) => void;
-    onDelete: (dessert: Element) => void;
+	onEdit: (dessert: Element) => void;
+	onDelete: (dessert: Element) => void;
 }
 
 interface Props {
-    element: Element;
-    actions: Actions;
-    color?: string;
+	element: Element;
+	actions: Actions;
+	color?: string;
 }
 
 const CrudButton: React.FC<Props> = ({element, actions, color}) => {
-    const handleEdit = () => {
-        actions.onEdit(element);
-    };
+	const handleEdit = () => {
+		actions.onEdit(element);
+	};
 
-    const handleDelete = () => {
-        actions.onDelete(element);
-    };
+	const handleDelete = () => {
+		actions.onDelete(element);
+	};
 
-    return (
-        <StyledButtonGroup>
-            <StyledButton color={'primary'} startIcon={<EditIcon/>} onClick={handleEdit}>
-                <FormattedMessage id="edit"/>
-            </StyledButton>
-            <StyledButton color={'primary'} startIcon={<DeleteIcon/>} onClick={handleDelete}>
-                <FormattedMessage id="delete"/>
-            </StyledButton>
-        </StyledButtonGroup>
-    );
+	return (
+		<StyledButtonGroup>
+			<StyledButton color={'primary'} startIcon={<EditIcon/>} onClick={handleEdit}>
+				<FormattedMessage id="edit"/>
+			</StyledButton>
+			<StyledButton color={'primary'} startIcon={<DeleteIcon/>} onClick={handleDelete}>
+				<FormattedMessage id="delete"/>
+			</StyledButton>
+		</StyledButtonGroup>
+	);
 };
 
 export default CrudButton;

@@ -11,9 +11,10 @@ export const StyledTypography = styled(Typography)(({theme}) => ({
 
 
 export const StyledAppBar = styled(AppBar)(({theme}) => ({
-    backgroundColor: "rgba(255,255,255,0.82)",
+    // inhertite avec opacity de 0.8
+    backgroundColor: "primary",
     backdropFilter: "blur(5px)",
-    boxShadow: "none", // Remove default box shadow
+    boxShadow: "none",
 }));
 
 export const StyledToolbar = styled(Toolbar)(({theme}) => ({
@@ -24,4 +25,10 @@ export const StyledToolbar = styled(Toolbar)(({theme}) => ({
 export const StyledLink = styled(Link)(({theme}) => ({
     color: "inherit",
     textDecoration: "none",
+    fontWeight: "bold",
+    fontSize: "1.2rem",
+
+    "&:hover": {
+        textDecoration: "underline",
+    }
 }));

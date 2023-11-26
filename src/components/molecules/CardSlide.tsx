@@ -147,11 +147,11 @@ const CardSlide: React.FC = () => {
                 </IconButton>
             </div>
             <div ref={sliderRef} className={classes.carouselSlider}>
-                {[...lastProducts, ...placeholderProducts, ...firstProducts].map((product, index) => (
+               {/* {[...lastProducts, ...placeholderProducts, ...firstProducts].map((product, index) => (
                     <div key={index} style={{flex: 1, minWidth: `${100 / itemsToShow}%`}}>
                         <ProductCard product={product}/>
                     </div>
-                ))}
+                ))}*/}
             </div>
             <div className={classes.carouselControls} style={{right: 0}}>
                 <IconButton onMouseEnter={stopAutoplay} onMouseLeave={startAutoplay} onClick={handleNextSlide}

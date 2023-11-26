@@ -1,61 +1,90 @@
-import { Box, Typography, Button } from "@mui/material";
+import {Box, Typography, Button, Grid, Container} from "@mui/material";
+import LandingBox, {LandingBoxProps} from "../../atoms/LandingBox";
+import cart from "../../../img/cart.svg";
+import delivery from "../../../img/delivery.svg";
+import payment from "../../../img/pay.svg";
 
-const backgroundImage = "https://img.freepik.com/photos-gratuite/feuilles-automne-vives-transparentes_23-2148239689.jpg?w=1380&t=st=1690055470~exp=1690056070~hmac=36cc16fd63b36335622ea9d6bcaa10b619ab79c16390b31567e37277218e9bec";
+
+const LivraisonProcess: LandingBoxProps [] = [
+	{
+		title: "Choisissez vos produits",
+		description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias dolores harum id magnam minima modi natus quae sapiente suscipit tenetur?",
+		icone: <img
+			src={cart}
+			alt="choisissez vos produits"
+			style={{
+				width: 70,
+				height: 70,
+			}}
+		/>
+	},
+	{
+		title: "Payez en ligne",
+		description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias dolores harum id magnam minima modi natus quae sapiente suscipit tenetur?",
+		icone: <img
+			src={payment}
+			alt="choisissez vos produits"
+			style={{
+				width: 70,
+				height: 70,
+			}}
+		/>
+	},
+	{
+		title: "Recevez votre commande",
+		description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias dolores harum id magnam minima modi natus quae sapiente suscipit tenetur?",
+		icone: <img
+			src={delivery}
+			alt="choisissez vos produits"
+			style={{
+				width: 70,
+				height: 70,
+			}}
+		/>
+	},
+];
 
 const Target = () => {
-    return (
-        <Box
-            minHeight="100vh"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            sx={{
-                backgroundImage: `url(${backgroundImage})`,
-                backgroundSize: "cover",
-                color: "white",
-                textAlign: "center",
-                padding: 4,
-                boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.3)", // Ajoute une ombre subtile au conteneur
-                backdropFilter: "blur(4px)", // Ajoute un effet de flou au fond pour une apparence élégante
-            }}
-        >
-            <Typography variant="h4" gutterBottom>
-                Notre Devise
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-                MIS Madagascar, votre boutique en ligne, propose des produits locaux authentiques.
-                Découvrez notre sélection de saveurs uniques. Commandez dès maintenant et plongez dans l'expérience
-                culinaire exceptionnelle qu'offre notre collection de produits de qualité.
-            </Typography>
-            <Box display="flex" justifyContent="space-between" maxWidth="400px" margin="auto" marginTop={4}>
-                <Button variant="contained" color="primary">
-                    Ajouter dans le panier →
-                </Button>
-                <Button variant="contained" color="primary">
-                    Acheter →
-                </Button>
-                <Button variant="contained" color="primary">
-                    S'inscrire →
-                </Button>
-                <Button variant="contained" color="primary">
-                    Livrer →
-                </Button>
-            </Box>
-            <Typography variant="body2" gutterBottom>
-                Offices worldwide
-            </Typography>
-            <Typography variant="body2" gutterBottom>
-                12 Full-time colleagues
-            </Typography>
-            <Typography variant="body2" gutterBottom>
-                300+ Disponibilité du site
-            </Typography>
-            <Typography variant="body2">
-                24/24 Paid time off
-            </Typography>
-        </Box>
-    );
+	return (
+		<Box
+			minHeight="50vh"
+			padding={6}
+		>
+			<Container
+				maxWidth="lg"
+				sx={{
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "center",
+					justifyContent: "center",
+					gap: 4,
+				}}
+			>
+				<Typography variant="h4" gutterBottom>
+					Comment ça marche notre boutique en ligne ?
+				</Typography>
+				<Typography variant="body1" gutterBottom>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur dolores exercitationem
+					expedita illo ipsa laborum minima placeat sint tempore voluptate. Aspernatur consectetur dolor
+					ducimus, et itaque porro voluptate. Debitis, provident.
+				</Typography>
+				<Grid container
+					  direction="row"
+					  justifyContent="space-between"
+					  alignItems="center"
+					  spacing={2}
+				>
+					{LivraisonProcess.map((item, index) => (
+						<Grid item key={index}
+							  xs={12} sm={6} md={4} lg={4} xl={4}
+						>
+							<LandingBox {...item}/>
+						</Grid>
+					))}
+				</Grid>
+			</Container>
+		</Box>
+	);
 };
 
 export default Target;
