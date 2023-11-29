@@ -48,7 +48,7 @@ const Target = () => {
 	return (
 		<Box
 			minHeight="50vh"
-			padding={6}
+			padding={'5rem 0'}
 		>
 			<Container
 				maxWidth="lg"

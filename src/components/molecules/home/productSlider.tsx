@@ -7,8 +7,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {baseURL} from "../../../api/apiService";
 import {Button, Container, Typography} from "@mui/material";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const useStyles = makeStyles(() => ({}));
+
 
 const ProductSlider: React.FC = () => {
 	const classes = useStyles();
@@ -31,106 +34,108 @@ const ProductSlider: React.FC = () => {
 	}
 
 	let settings = {
-		slidesToShow: 1,
-		dots: false,
-		autoplay: false,
+		autoplay: true,
 		arrows: true,
-		autoplaySpeed: 4000,
-		centerMode: true,
-		centerPadding: "240px",
-		responsive: [
-			{
-				breakpoint: 1400,
-				settings: {
-					centerPadding: "130px"
-				}
-			},
-			{
-				breakpoint: 1200,
-				settings: {
-					centerPadding: "40px"
-				}
-			},
-			{
-				breakpoint: 768,
-				settings: {
-					centerPadding: "12px",
-					autoplay: false
-				}
-			},
-			{
-				breakpoint: 375,
-				settings: {
-					centerMode: false,
-					autoplay: false
-				}
-			}
-		]
+		// class for arrows
+		prevArrow: <ArrowBackIosIcon
+			fontSize={"large"}
+			sx={{
+				fontSize: "3rem",
+				position: "absolute",
+				top: "50%",
+				left: "0",
+				transform: "translateY(-50%)",
+				zIndex: 1,
+				borderRadius: "50%",
+				padding: "0.5rem",
+				color: "white",
+				// add hover effect
+				"&:hover": {
+					color: "blue",
+				},
+			}}
+		/>,
+		nextArrow: <ArrowForwardIosIcon
+			fontSize={"large"}
+			sx={{
+				fontSize: "3rem",
+				position: "absolute",
+				top: "50%",
+				right: "0",
+				transform: "translateY(-50%)",
+				zIndex: 1,
+				borderRadius: "50%",
+				padding: "0.5rem",
+				color: "white",
+				"&:hover": {
+					color: "blue",
+				},
+			}}
+		/>,
 	};
 
 
 	return (
-		<Slider {...settings} className={''}>
-			{products?.data.map((product: any) => (
-				<div>
-					<div
-						key={product._id}
-						style={{
-							backgroundImage: `url(${baseURL}/${product.image})`,
-							backgroundSize: "cover",
-							backgroundPosition: "center",
-							backgroundColor: "rgba(0, 0, 0, 0.7)",
-							height: "50vh",
-							width: "100%",
-							flexDirection: "column",
-							justifyContent: "end",
-							alignItems: "end",
-							display: "flex",
-							// optimise image loading
-							filter: "blur(0px)",
-						}}
-					>
-						<Container>
-							<div
-								style={{
-									display: "flex",
-									flexDirection: "column",
-									justifyContent: "end",
-									alignItems: "end",
-									gap: "1rem",
-									marginBottom: "2rem",
-								}}
-							>
-								<Typography variant={"h4"} color={"white"} fontWeight={'700'}>
-									{product.name?.fr}
-								</Typography>
-								<Typography variant={"h6"} color={"white"}
-											align={"right"}
-									// limiter en 3 lignes
-											sx={{
-												display: "-webkit-box",
-												WebkitLineClamp: 3,
-												WebkitBoxOrient: "vertical",
-												overflow: "hidden",
-												textOverflow: "ellipsis",
-												"&::after": {
-													content: '"..."',
-												},
-											}}
-
+		<div>
+			<Slider {...settings} className={''}>
+				{products?.data.map((product: any) => (
+					<div key={product._id}>
+						<div
+							style={{
+								backgroundImage: `url(${baseURL}/${product.image})`,
+								backgroundSize: "cover",
+								backgroundPosition: "center",
+								backgroundColor: "rgba(0, 0, 0, 0.7)",
+								height: "50vh",
+								flexDirection: "column",
+								justifyContent: "end",
+								alignItems: "end",
+								display: "flex",
+								// optimise image loading
+								filter: "blur(0px)",
+							}}
+						>
+							<Container>
+								<div
+									style={{
+										display: "flex",
+										flexDirection: "column",
+										justifyContent: "end",
+										alignItems: "end",
+										gap: "1rem",
+										marginBottom: "2rem",
+									}}
 								>
-									{product.description?.fr}
-								</Typography>
-								<Button variant="contained" color="secondary">
-									Voir plus
-								</Button>
-							</div>
-						</Container>
-					</div>
-				</div>
+									<Typography variant={"h4"} color={"white"} fontWeight={'700'}>
+										{product.name?.fr}
+									</Typography>
+									<Typography variant={"h6"} color={"white"}
+												align={"right"}
+												sx={{
+													display: "-webkit-box",
+													WebkitLineClamp: 3,
+													WebkitBoxOrient: "vertical",
+													overflow: "hidden",
+													textOverflow: "ellipsis",
+													"&::after": {
+														content: '"..."',
+													},
+												}}
 
-			))}
-		</Slider>
+									>
+										{product.description?.fr}
+									</Typography>
+									<Button variant="contained" color="secondary">
+										Voir plus
+									</Button>
+								</div>
+							</Container>
+						</div>
+					</div>
+
+				))}
+			</Slider>
+		</div>
 	);
 };
 

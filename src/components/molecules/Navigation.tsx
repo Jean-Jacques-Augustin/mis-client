@@ -1,7 +1,8 @@
 import React from "react";
-import {AppBar, Container, Toolbar, Typography, IconButton} from "@mui/material";
+import {AppBar, Container, IconButton, Hidden} from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {StyledLink, StyledToolbar} from "./WithStyled";
+import MenuIcon from "@mui/icons-material/Menu";
 
 
 export default function Navigation() {
@@ -12,8 +13,7 @@ export default function Navigation() {
 				position={"sticky"}
 				sx={{
 					opacity: 0.9,
-					backdropFilter: "blur(5px)",
-					boxShadow: "none",
+					backdropFilter: "blur(8px)",
 				}}
 		>
 			<Container>
@@ -22,17 +22,19 @@ export default function Navigation() {
 						Home
 					</StyledLink>
 
-					<div style={{display: "flex", gap: "1rem", alignItems: "center"}}>
-						<StyledLink to={""}>
-							Catalogue
-						</StyledLink>
-						<StyledLink to={"/catalogue"}>
-							Promotion
-						</StyledLink>
-						<StyledLink to={"/catalogue"}>
-							Contact
-						</StyledLink>
-					</div>
+					<Hidden smDown>
+						<div style={{display: "flex", gap: "1rem", alignItems: "center"}}>
+							<StyledLink to={""}>
+								Catalogue
+							</StyledLink>
+							<StyledLink to={"/catalogue"}>
+								Promotion
+							</StyledLink>
+							<StyledLink to={"/catalogue"}>
+								Contact
+							</StyledLink>
+						</div>
+					</Hidden>
 
 					<div style={{display: "flex", gap: "1rem", alignItems: "center"}}>
 						<StyledLink
@@ -43,6 +45,12 @@ export default function Navigation() {
 						<IconButton color="inherit" aria-label="Panier">
 							<ShoppingCartIcon/>
 						</IconButton>
+
+						<Hidden mdUp>
+							<IconButton color="inherit" aria-label="Menu">
+								<MenuIcon/>
+							</IconButton>
+						</Hidden>
 					</div>
 				</StyledToolbar>
 			</Container>

@@ -6,12 +6,9 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import {useIntl} from "react-intl";
-import {Product, ProductState} from "../../../interfaces/ProductInterface";
+import {ProductState} from "../../../interfaces/ProductInterface";
 import {baseURL} from "../../../api/apiService";
-import {Container} from "@mui/material";
-
 
 const StyledCard = styled(Card)`
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -31,19 +28,24 @@ const CardContentWrapper = styled(CardContent)`
 `;
 
 const ProductName = styled(Typography)`
-  font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1rem;
   margin-bottom: 10px;
 `;
 
 const ProductDescription = styled(Typography)`
-  font-size: 1rem;
   margin-bottom: 10px;
-  color: #555;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-weight: 400;
+  text-align: justify;
+  font-size: 0.8rem;
 `;
 
 const ProductPrice = styled(Typography)`
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
 `;
 
@@ -54,19 +56,6 @@ const StyledCardActions = styled(CardActions)`
   gap: 10px;
 `;
 
-const StyledButton = styled(Button)`
-  background-color: #ff9800;
-  color: #fff;
-  font-weight: 600;
-
-  &:hover {
-    background-color: #f57c00;
-  }
-`;
-
-const ShareButton = styled(Button)`
-  color: #777;
-`;
 
 const ProductCard: React.FC<ProductState> = ({product, onSlide}) => {
 	const intl = useIntl();
@@ -84,33 +73,27 @@ const ProductCard: React.FC<ProductState> = ({product, onSlide}) => {
 			/>
 			<CardContentWrapper>
 				<ProductName gutterBottom variant="h5">
-					{product.name?.locale}
+					{product.name[lang]}
 				</ProductName>
-				<ProductDescription variant="body2" color="text.secondary">
-					{product.description.lang}
+				<ProductDescription variant="body2" color="text.secondary"
+
+
+				>
+					{product.description[lang]}
 				</ProductDescription>
 				<ProductPrice variant="body2" color="text.secondary">
 					Price: ${product.price}
 				</ProductPrice>
 			</CardContentWrapper>
 			<StyledCardActions>
-				<StyledButton size="medium"
-							  disableElevation
-							  fullWidth
-							  style={{
-								  textTransform: "none",
-							  }}
-							  variant={"contained"}
-				>Learn More</StyledButton>
-				<StyledButton
-					fullWidth
-					style={{
-						textTransform: "none",
-					}}
-					variant={"outlined"}
-					size="medium" startIcon={<AddShoppingCartIcon/>}>
-					Add to cart
-				</StyledButton>
+				<Button size="medium"
+						disableElevation
+						fullWidth
+						style={{
+							textTransform: "none",
+						}}
+						variant={"contained"}
+				>Learn More</Button>
 			</StyledCardActions>
 		</StyledCard>
 

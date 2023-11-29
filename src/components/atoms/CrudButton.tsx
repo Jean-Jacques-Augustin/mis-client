@@ -10,17 +10,10 @@ const StyledButtonGroup = styled(ButtonGroup)`
 `;
 
 const StyledButton = styled(Button)<{ color?: string }>`
-  color: inherit;
   min-height: 36px;
   border-radius: 18px;
   text-transform: none;
-    /* background-color: ${(props) => (props.color === 'primary' ? '#1565c0' : '#c62828')};*/
-  background-color: inherit;
   transition: background-color 0.2s;
-
-  &:hover {
-    background-color: ${(props) => (props.color === 'primary' ? '#0f4fa8' : '#b31616')};
-  }
 `;
 
 interface Element {
@@ -53,7 +46,7 @@ const CrudButton: React.FC<Props> = ({element, actions, color}) => {
 			<StyledButton color={'primary'} startIcon={<EditIcon/>} onClick={handleEdit}>
 				<FormattedMessage id="edit"/>
 			</StyledButton>
-			<StyledButton color={'primary'} startIcon={<DeleteIcon/>} onClick={handleDelete}>
+			<StyledButton color={'secondary'} startIcon={<DeleteIcon/>} onClick={handleDelete}>
 				<FormattedMessage id="delete"/>
 			</StyledButton>
 		</StyledButtonGroup>

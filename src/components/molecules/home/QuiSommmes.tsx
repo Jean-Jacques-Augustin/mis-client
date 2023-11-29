@@ -5,8 +5,10 @@ const QuiSommmes = () => {
         <Box
             sx={{
                 backgroundColor: 'background.default',
-                minHeight: '100%',
-                py: 6
+                minHeight: '50vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
             }}
         >
             <Container>
