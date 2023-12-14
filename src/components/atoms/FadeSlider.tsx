@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { IconButton, useMediaQuery } from "@mui/material";
+import React, {useState, useEffect} from "react";
+import {IconButton, useMediaQuery} from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
-import { styled, createTheme, ThemeProvider } from "@mui/material";
+import {styled, createTheme, ThemeProvider} from "@mui/material";
 
 interface FadeSliderProps {
     children: React.ReactNode;
@@ -15,7 +15,7 @@ const CarouselContainer = styled("div")({
     marginBottom: "16px",
 });
 
-const CarouselSlider = styled("div")(({ theme }) => ({
+const CarouselSlider = styled("div")(({theme}) => ({
     display: "flex",
     transition: "transform 0.5s ease-in-out",
     whiteSpace: "nowrap",
@@ -63,18 +63,18 @@ const NextButton = styled(IconButton)({
 
 const theme = createTheme();
 
-const FadeSlider: React.FC<FadeSliderProps> = ({ children }) => {
+const FadeSlider: React.FC<FadeSliderProps> = ({children}) => {
     const [activeIndex, setActiveIndex] = useState<number>(0);
 
     const slideCount = React.Children.count(children);
 
     const handleNextSlide = () => {
-        setActiveIndex((prevIndex) => (prevIndex + 1) % slideCount);
+        setActiveIndex(prevIndex => (prevIndex + 1) % slideCount);
     };
 
     const handlePrevSlide = () => {
-        setActiveIndex((prevIndex) =>
-            prevIndex === 0 ? slideCount - 1 : prevIndex - 1
+        setActiveIndex(prevIndex =>
+            prevIndex === 0 ? slideCount - 1 : prevIndex - 1,
         );
     };
 
@@ -104,12 +104,17 @@ const FadeSlider: React.FC<FadeSliderProps> = ({ children }) => {
     return (
         <ThemeProvider theme={theme}>
             <CarouselContainer>
-                <CarouselControls style={{ left: 0 }}>
+                <CarouselControls style={{left: 0}}>
                     <PrevButton onClick={handlePrevSlide}>
                         <NavigateBeforeIcon />
                     </PrevButton>
                 </CarouselControls>
-                <CarouselSlider style={{ transform: `translateX(-${activeIndex * (100 / maxVisibleSlides)}%)` }}>
+                <CarouselSlider
+                    style={{
+                        transform: `translateX(-${
+                            activeIndex * (100 / maxVisibleSlides)
+                        }%)`,
+                    }}>
                     {React.Children.map(children, (child, index) => {
                         if (React.isValidElement(child)) {
                             return <Slide key={index}>{child}</Slide>;
@@ -117,7 +122,7 @@ const FadeSlider: React.FC<FadeSliderProps> = ({ children }) => {
                         return null;
                     })}
                 </CarouselSlider>
-                <CarouselControls style={{ right: 0 }}>
+                <CarouselControls style={{right: 0}}>
                     <NextButton onClick={handleNextSlide}>
                         <NavigateNextIcon />
                     </NextButton>

@@ -1,6 +1,6 @@
-import React from 'react';
-import { TextField, Theme } from '@mui/material';
-import styled from '@mui/material/styles/styled';
+import React from "react";
+import {TextField, Theme} from "@mui/material";
+import styled from "@mui/material/styles/styled";
 
 interface CustomTextFieldProps {
     label: any;
@@ -12,30 +12,30 @@ interface CustomTextFieldProps {
     multiline?: boolean;
 }
 
-const CustomTextFieldWrapper = styled('div')(({ theme }: { theme: Theme }) => ({
-    '& .MuiOutlinedInput-root': {
+const CustomTextFieldWrapper = styled("div")(({theme}: {theme: Theme}) => ({
+    "& .MuiOutlinedInput-root": {
         borderRadius: 4,
-        backgroundColor: '#fff',
-        '& fieldset': {
-            borderColor: '#ccc',
+        backgroundColor: "#fff",
+        "& fieldset": {
+            borderColor: "#ccc",
         },
-        '&:hover fieldset': {
-            borderColor: '#aaa',
+        "&:hover fieldset": {
+            borderColor: "#aaa",
         },
-        '&.Mui-focused fieldset': {
+        "&.Mui-focused fieldset": {
             borderColor: theme.palette.primary.main,
         },
     },
 }));
 
-const HelperText = styled('div')(({ theme }: { theme: Theme }) => ({
+const HelperText = styled("div")(({theme}: {theme: Theme}) => ({
     color: theme.palette.error.main,
     marginTop: 4,
 }));
 
 const CustomTextField: React.FC<CustomTextFieldProps> = ({
     label,
-    type = 'text',
+    type = "text",
     onChange,
     value,
     name,

@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
-import { Box, Button, Container, Grid, Typography, Snackbar } from '@mui/material';
-import CustomTextField from '../components/atoms/CustomTextField';
-import api from '../api/apiService';
+import React, {useState} from "react";
+import {
+    Box,
+    Button,
+    Container,
+    Grid,
+    Typography,
+    Snackbar,
+} from "@mui/material";
+import CustomTextField from "../components/atoms/CustomTextField";
+import api from "../api/apiService";
 
 interface LoginForm {
     email: string;
@@ -10,25 +17,25 @@ interface LoginForm {
 
 const Login: React.FC = () => {
     const [loginForm, setLoginForm] = useState<LoginForm>({
-        email: '',
-        password: '',
+        email: "",
+        password: "",
     });
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarMessage, setSnackbarMessage] = useState("");
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        setLoginForm((prevLoginForm) => ({ ...prevLoginForm, [name]: value }));
+        const {name, value} = event.target;
+        setLoginForm(prevLoginForm => ({...prevLoginForm, [name]: value}));
     };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const { email, password } = loginForm;
+        const {email, password} = loginForm;
 
         try {
-            const response = await api.post('/login', {
+            const response = await api.post("/login", {
                 email,
                 password,
             });
@@ -37,13 +44,13 @@ const Login: React.FC = () => {
 
             // Handle successful login here
 
-            setSnackbarMessage('Connexion réussie !');
+            setSnackbarMessage("Connexion réussie !");
             setSnackbarOpen(true);
 
             // Reset login form (optional)
             setLoginForm({
-                email: '',
-                password: '',
+                email: "",
+                password: "",
             });
         } catch (error: any) {
             console.log(error.response.status);
@@ -63,7 +70,11 @@ const Login: React.FC = () => {
 
     return (
         <Container maxWidth="md">
-            <Grid container justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
+            <Grid
+                container
+                justifyContent="center"
+                alignItems="center"
+                style={{height: "100vh"}}>
                 <Grid item xs={12} md={6}>
                     <Box
                         display="flex"
@@ -72,12 +83,11 @@ const Login: React.FC = () => {
                         border="1px solid grey"
                         width={500}
                         borderRadius="4px"
-                        p={3}
-                    >
+                        p={3}>
                         <Typography variant="h5" gutterBottom>
                             Connexion
                         </Typography>
-                        <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+                        <form onSubmit={handleSubmit} style={{width: "100%"}}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} md={12}>
                                     <CustomTextField
@@ -105,8 +115,7 @@ const Login: React.FC = () => {
                                 variant="contained"
                                 color="primary"
                                 fullWidth
-                                style={{ marginTop: 16 }}
-                            >
+                                style={{marginTop: 16}}>
                                 Se connecter
                             </Button>
                         </form>

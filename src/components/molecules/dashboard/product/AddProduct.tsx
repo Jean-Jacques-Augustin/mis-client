@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef} from "react";
 import {
     Button,
     FormControl,
@@ -6,21 +6,22 @@ import {
     Select,
     MenuItem,
     Grid,
-    Card, Snackbar,
-} from '@mui/material';
-import CustomTextField from '../../../atoms/CustomTextField';
-import Typography from '@mui/material/Typography';
-import {FormattedMessage, useIntl} from 'react-intl';
-import api from '../../../../api/apiService';
-import MuiAlert, {AlertProps} from '@mui/material/Alert';
+    Card,
+    Snackbar,
+} from "@mui/material";
+import CustomTextField from "../../../atoms/CustomTextField";
+import Typography from "@mui/material/Typography";
+import {FormattedMessage, useIntl} from "react-intl";
+import api from "../../../../api/apiService";
+import MuiAlert, {AlertProps} from "@mui/material/Alert";
 import PageHeader from "../../../atoms/PageHeader";
 import {useGetAllCategoryQuery} from "../../../../store/apiSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const languageList = [
-    {code: 'fr', label: 'FR'},
-    {code: 'en', label: 'EN'},
-    {code: 'mg', label: 'MG'},
+    {code: "fr", label: "FR"},
+    {code: "en", label: "EN"},
+    {code: "mg", label: "MG"},
 ];
 
 interface ProductFormData {
@@ -41,34 +42,38 @@ const AddProduct: React.FC = () => {
     const {data: categories, isLoading, error} = useGetAllCategoryQuery();
 
     const [formData, setFormData] = useState<ProductFormData>({
-        name: {fr: '', en: '', mg: ''},
+        name: {fr: "", en: "", mg: ""},
         price: 0,
-        description: {fr: '', en: '', mg: ''},
-        category: '', // Make sure category is initialized as a string
+        description: {fr: "", en: "", mg: ""},
+        category: "", // Make sure category is initialized as a string
         quantity: 0,
     });
 
     const [image, setImage] = useState<File | null>(null);
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState('');
-    const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [snackbarSeverity, setSnackbarSeverity] = useState<
+        "success" | "error"
+    >("success");
 
-    const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+    const handleChange = (
+        event: React.ChangeEvent<{name?: string; value: unknown}>,
+    ) => {
         const {name, value} = event.target;
 
         // Check if the field is related to multilingual name or description
-        if (name && name.startsWith('name-')) {
-            const languageCode = name.split('-')[1];
-            setFormData((prevData) => ({
+        if (name && name.startsWith("name-")) {
+            const languageCode = name.split("-")[1];
+            setFormData(prevData => ({
                 ...prevData,
                 name: {
                     ...prevData.name,
                     [languageCode]: value as string,
                 },
             }));
-        } else if (name && name.startsWith('description-')) {
-            const languageCode = name.split('-')[1];
-            setFormData((prevData) => ({
+        } else if (name && name.startsWith("description-")) {
+            const languageCode = name.split("-")[1];
+            setFormData(prevData => ({
                 ...prevData,
                 description: {
                     ...prevData.description,
@@ -76,7 +81,7 @@ const AddProduct: React.FC = () => {
                 },
             }));
         } else {
-            setFormData((prevData) => ({
+            setFormData(prevData => ({
                 ...prevData,
                 [name as string]: value,
             }));
@@ -91,27 +96,27 @@ const AddProduct: React.FC = () => {
         const productData = new FormData();
 
         // Convert the name and category fields to JSON and append to the FormData
-        productData.append('name', JSON.stringify(name));
-        productData.append('category', category);
+        productData.append("name", JSON.stringify(name));
+        productData.append("category", category);
 
         // Append the form data to the FormData object for description, price, image, and quantity
-        productData.append('description', JSON.stringify(description));
-        productData.append('price', price.toString());
-        productData.append('image', image || ''); // Use empty string as fallback if image is null
-        productData.append('quantity', quantity.toString());
+        productData.append("description", JSON.stringify(description));
+        productData.append("price", price.toString());
+        productData.append("image", image || ""); // Use empty string as fallback if image is null
+        productData.append("quantity", quantity.toString());
 
         try {
-            const response = await api.post('/products', productData, {
+            const response = await api.post("/products", productData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    "Content-Type": "multipart/form-data",
                 },
             });
 
             console.log(response);
-            showSnackbar('Product created successfully', 'success');
+            showSnackbar("Product created successfully", "success");
         } catch (error) {
             console.error(error);
-            showSnackbar('An error occurred. Please try again later.', 'error');
+            showSnackbar("An error occurred. Please try again later.", "error");
         }
     };
 
@@ -119,22 +124,22 @@ const AddProduct: React.FC = () => {
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
-        if (file && file.type.startsWith('image/')) {
+        if (file && file.type.startsWith("image/")) {
             setImage(file);
         } else {
             // Handle non-image file selection
-            alert('Please select an image file.');
+            alert("Please select an image file.");
         }
     };
 
     const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
         const file = event.dataTransfer.files?.[0];
-        if (file && file.type.startsWith('image/')) {
+        if (file && file.type.startsWith("image/")) {
             setImage(file);
         } else {
             // Handle non-image file drop
-            alert('Please drop an image file.');
+            alert("Please drop an image file.");
         }
     };
 
@@ -142,7 +147,7 @@ const AddProduct: React.FC = () => {
         event.preventDefault();
     };
 
-    const showSnackbar = (message: string, severity: 'success' | 'error') => {
+    const showSnackbar = (message: string, severity: "success" | "error") => {
         setSnackbarMessage(message);
         setSnackbarSeverity(severity);
         setIsSnackbarOpen(true);
@@ -152,21 +157,22 @@ const AddProduct: React.FC = () => {
         setIsSnackbarOpen(false);
     };
 
-
-    if (isLoading) return <CircularProgress/>;
-    if (error) return <div>Error: {'message' in error ? error.message : 'Erreur'}</div>;
-
+    if (isLoading) return <CircularProgress />;
+    if (error)
+        return (
+            <div>Error: {"message" in error ? error.message : "Erreur"}</div>
+        );
 
     return (
         <form onSubmit={handleSubmit}>
-            <PageHeader title={'add_product'} buttonLabel={'return'}/>
+            <PageHeader title={"add_product"} buttonLabel={"return"} />
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Typography variant="h6" align="left">
-                        <FormattedMessage id={'name'}/>
+                        <FormattedMessage id={"name"} />
                     </Typography>
-                    <Card variant={'outlined'} sx={{p: 2}}>
-                        {languageList.map((language) => (
+                    <Card variant={"outlined"} sx={{p: 2}}>
+                        {languageList.map(language => (
                             <CustomTextField
                                 key={language.code}
                                 label={`Name (${language.label})`}
@@ -181,10 +187,10 @@ const AddProduct: React.FC = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <Typography variant="h6" align="left">
-                        <FormattedMessage id={'description'}/>
+                        <FormattedMessage id={"description"} />
                     </Typography>
-                    <Card variant={'outlined'} sx={{p: 2}}>
-                        {languageList.map((language) => (
+                    <Card variant={"outlined"} sx={{p: 2}}>
+                        {languageList.map(language => (
                             <CustomTextField
                                 key={language.code}
                                 label={`Description (${language.label})`}
@@ -213,18 +219,22 @@ const AddProduct: React.FC = () => {
                         <Select
                             name="category"
                             value={formData.category}
-                            onChange={(event) =>
-                                handleChange(event as React.ChangeEvent<{ name?: string; value: unknown }>)
-                            }
-                        >
-                            <MenuItem value="category1">Sans catégorie</MenuItem>
-                            {
-                                categories.data.map((category: any) => (
-                                    <MenuItem value={category._id}>
-                                        {category.description[locale]}
-                                    </MenuItem>
-                                ))
-                            }
+                            onChange={event =>
+                                handleChange(
+                                    event as React.ChangeEvent<{
+                                        name?: string;
+                                        value: unknown;
+                                    }>,
+                                )
+                            }>
+                            <MenuItem value="category1">
+                                Sans catégorie
+                            </MenuItem>
+                            {categories.data.map((category: any) => (
+                                <MenuItem value={category._id}>
+                                    {category.description[locale]}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                 </Grid>
@@ -234,14 +244,13 @@ const AddProduct: React.FC = () => {
                         onDragOver={handleDragOver}
                         onClick={() => fileInputRef.current?.click()}
                         style={{
-                            border: '2px dashed #aaa',
-                            padding: '20px',
-                            textAlign: 'center',
-                            cursor: 'pointer',
-                            minHeight: '150px',
-                            position: 'relative',
-                        }}
-                    >
+                            border: "2px dashed #aaa",
+                            padding: "20px",
+                            textAlign: "center",
+                            cursor: "pointer",
+                            minHeight: "150px",
+                            position: "relative",
+                        }}>
                         {image ? (
                             <img
                                 src={URL.createObjectURL(image)}
@@ -250,7 +259,8 @@ const AddProduct: React.FC = () => {
                             />
                         ) : (
                             <p className="text-gray-500">
-                                Drag and drop an image here or click to select an image
+                                Drag and drop an image here or click to select
+                                an image
                             </p>
                         )}
                         <input
@@ -258,7 +268,12 @@ const AddProduct: React.FC = () => {
                             type="file"
                             accept="image/*"
                             onChange={handleImageChange}
-                            style={{opacity: 0, position: 'absolute', top: 0, left: 0}}
+                            style={{
+                                opacity: 0,
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                            }}
                         />
                     </div>
                 </Grid>
@@ -274,8 +289,8 @@ const AddProduct: React.FC = () => {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <Typography variant={'h6'} align={'left'}>
-                        * <FormattedMessage id={'required'}/>
+                    <Typography variant={"h6"} align={"left"}>
+                        * <FormattedMessage id={"required"} />
                     </Typography>
                 </Grid>
 
@@ -285,8 +300,14 @@ const AddProduct: React.FC = () => {
                     </Button>
                 </Grid>
             </Grid>
-            <Snackbar open={isSnackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-                <MuiAlert elevation={6} variant="filled" severity={snackbarSeverity}>
+            <Snackbar
+                open={isSnackbarOpen}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}>
+                <MuiAlert
+                    elevation={6}
+                    variant="filled"
+                    severity={snackbarSeverity}>
                     {snackbarMessage}
                 </MuiAlert>
             </Snackbar>

@@ -9,10 +9,10 @@ interface ProductCartProps {
 }
 
 const PubProduct: React.FC<ProductCartProps> = ({
-                                                    imageSrc,
-                                                    productName,
-                                                    productDescription,
-                                                }) => {
+    imageSrc,
+    productName,
+    productDescription,
+}) => {
     return (
         <Box
             borderRadius={2}
@@ -24,11 +24,12 @@ const PubProduct: React.FC<ProductCartProps> = ({
                 flexDirection: "row",
                 alignItems: "center",
                 marginBottom: "20px",
-            }}
-        >
+            }}>
             {/* Image du produit (utilisez l'URL réelle du produit si disponible, sinon utilisez le placeholder) */}
             <img
-                crossOrigin="anonymous" src={`${baseURL}/${imageSrc}`} alt={productName}
+                crossOrigin="anonymous"
+                src={`${baseURL}/${imageSrc}`}
+                alt={productName}
                 style={{
                     height: 600,
                     width: "50%",
