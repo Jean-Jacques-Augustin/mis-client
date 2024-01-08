@@ -10,15 +10,67 @@ import {Button, Container, Typography} from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-const useStyles = makeStyles(() => ({}));
+const useStyles = makeStyles((theme) => ({
+    slide: {
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        height: "70vh",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        alignItems: "flex-end",
+        display: "flex",
+        filter: "blur(0px)",
+        borderRadius: "1rem",
+        marginTop: "2rem",
+    },
+    content: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        alignItems: "flex-end",
+        gap: "1rem",
+        marginBottom: "2rem",
+        // style de l'image
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        // style du container
+        height: "100%",
+        width: "100%",
+        padding: "2rem",
+        borderRadius: "1rem",
+    },
+    description: {
+        display: "-webkit-box",
+        WebkitLineClamp: 3,
+        WebkitBoxOrient: "vertical",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        "&::after": {
+            content: '"..."',
+        },
+    },
+    button: {
+        marginTop: "1rem",
+        borderRadius: "1rem",
+        padding: "0.5rem 1rem",
+        textTransform: "none",
+    },
+    arrowIcon: {
+        fontSize: "3rem",
+        position: "absolute",
+        top: "50%",
+        borderRadius: "50%",
+        padding: "0.5rem",
+        color: "white",
+    },
+}));
 
 const ProductSlider: React.FC = () => {
     const classes = useStyles();
-    const [activeIndex, setActiveIndex] = useState<number>(0);
     const {data: products, isLoading, error} = useGetAllProductQuery();
     const intl = useIntl();
-
-    console.log("products", products);
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -30,107 +82,67 @@ const ProductSlider: React.FC = () => {
         );
     }
 
-    let settings = {
+    const settings = {
         autoplay: true,
         arrows: true,
-        // class for arrows
         prevArrow: (
             <ArrowBackIosIcon
-                fontSize={"large"}
-                sx={{
-                    fontSize: "3rem",
-                    position: "absolute",
-                    top: "50%",
-                    left: "0",
-                    transform: "translateY(-50%)",
-                    zIndex: 1,
-                    borderRadius: "50%",
-                    padding: "0.5rem",
-                    color: "white",
-                }}
+                fontSize="large"
+                className={classes.arrowIcon}
+                style={{left: 0, transform: "translateY(-50%)"}}
             />
         ),
         nextArrow: (
             <ArrowForwardIosIcon
-                fontSize={"large"}
-                sx={{
-                    fontSize: "3rem",
-                    position: "absolute",
-                    top: "50%",
-                    right: "0",
-                    transform: "translateY(-50%)",
-                    zIndex: 1,
-                    borderRadius: "50%",
-                    padding: "0.5rem",
-                    color: "white",
-                }}
+                fontSize="large"
+                className={classes.arrowIcon}
+                style={{right: 0, transform: "translateY(-50%)"}}
             />
         ),
     };
 
     return (
-        <div>
-            <Slider {...settings} className={""}>
+        <Container>
+            <Slider {...settings} className="">
                 {products?.data.map((product: any) => (
-                    <div key={product._id}>
-                        <div
-                            style={{
-                                backgroundImage: `url(${baseURL}/${product.image})`,
-                                backgroundSize: "cover",
-                                backgroundPosition: "center",
-                                backgroundColor: "rgba(0, 0, 0, 0.7)",
-                                height: "70vh",
-                                flexDirection: "column",
-                                justifyContent: "end",
-                                alignItems: "end",
-                                display: "flex",
-                                // optimise image loading
-                                filter: "blur(0px)",
-                            }}>
-                            <Container>
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        justifyContent: "end",
-                                        alignItems: "end",
-                                        gap: "1rem",
-                                        marginBottom: "2rem",
-                                    }}>
-                                    <Typography
-                                        variant={"h4"}
-                                        color={"white"}
-                                        fontWeight={"700"}>
-                                        {product.name?.fr}
-                                    </Typography>
-                                    <Typography
-                                        variant={"h6"}
-                                        color={"white"}
-                                        align={"right"}
-                                        sx={{
-                                            display: "-webkit-box",
-                                            WebkitLineClamp: 3,
-                                            WebkitBoxOrient: "vertical",
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                            "&::after": {
-                                                content: '"..."',
-                                            },
-                                        }}>
-                                        {product.description?.fr}
-                                    </Typography>
-                                    <Button
-                                        variant="contained"
-                                        color="secondary">
-                                        Voir plus
-                                    </Button>
-                                </div>
-                            </Container>
+                    <div
+                        key={product._id}
+                        className={classes.slide}
+
+                    >
+
+                        <div className={classes.content}
+                             style={{
+                                 backgroundImage: `url(${baseURL}/${product.image})`,
+                             }}
+                        >
+                            <Typography variant="h5" color="white" fontWeight="700">
+                                {product.name?.fr}
+                            </Typography>
+                            <Typography
+                                variant="body1"
+                                color="white"
+                                align="right"
+                                className={classes.description}
+                            >
+                                {product.description?.fr}
+                            </Typography>
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                sx={
+                                    {
+                                        textTransform: "none",
+                                    }
+                                }
+                            >
+                                Voir plus
+                            </Button>
                         </div>
                     </div>
                 ))}
             </Slider>
-        </div>
+        </Container>
     );
 };
 

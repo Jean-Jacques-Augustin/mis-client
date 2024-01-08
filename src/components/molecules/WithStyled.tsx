@@ -26,7 +26,7 @@ export const StyledLink = styled(Link)(({theme}) => ({
     color: "inherit",
     textDecoration: "none",
     fontWeight: "bold",
-    fontSize: "1.2rem",
+    fontFamily: "Salsa",
 
     "&:hover": {
         textDecoration: "underline",

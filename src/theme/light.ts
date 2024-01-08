@@ -5,7 +5,7 @@ import {createTheme} from "@mui/material";
  */
 const light = createTheme({
     typography: {
-        fontFamily: ["Open Sans", "Helvetica", "Arial", "sans-serif"].join(","),
+        fontFamily: ["Salsa", "Helvetica", "Arial", "sans-serif"].join(","),
     },
     palette: {
         mode: "light",

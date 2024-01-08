@@ -18,8 +18,8 @@ export default function Navigation() {
         <AppBar
             color="inherit"
             elevation={0}
-            variant="outlined"
-            position={"sticky"}
+            variant="elevation"
+            position={"fixed"}
             sx={{
                 opacity: 0.9,
                 backdropFilter: "blur(8px)",
@@ -27,7 +27,7 @@ export default function Navigation() {
             <Container>
                 <StyledToolbar>
                     <StyledLink to={"/"}>
-                        <img src={logo} alt="logo" style={{width: "60px"}} />
+                        <img src={logo} alt="logo" style={{width: "60px"}}/>
                     </StyledLink>
 
                     <Hidden smDown>
@@ -55,7 +55,7 @@ export default function Navigation() {
                                 color={"primary"}
                                 disableElevation
                                 style={{textTransform: "none"}}>
-                                <FormattedMessage id={"se_connecter"} />
+                                <FormattedMessage id={"se_connecter"}/>
                             </Button>
                         </Link>
 
@@ -64,13 +64,13 @@ export default function Navigation() {
                                 <Badge
                                     badgeContent={cart.items.length}
                                     color="secondary">
-                                    <ShoppingCartIcon />
+                                    <ShoppingCartIcon/>
                                 </Badge>
                             </IconButton>
                         </Link>
                         <Hidden mdUp>
                             <IconButton color="inherit" aria-label="Menu">
-                                <MenuIcon />
+                                <MenuIcon/>
                             </IconButton>
                         </Hidden>
                     </div>
