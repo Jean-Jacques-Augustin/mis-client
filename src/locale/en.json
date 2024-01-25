@@ -1,4 +1,6 @@
 {
+  "login": "Login",
+  "password": "Password",
   "email": "Address email",
   "signup": "Create an account",
   "confirm_password": "Confirm Password",

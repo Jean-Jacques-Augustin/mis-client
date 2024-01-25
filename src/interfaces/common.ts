@@ -1,3 +1,8 @@
+export interface LinkInterface {
+  url: string;
+  label: string;
+}
+
 interface LocalizedText {
   fr: string;
   en: string;
@@ -18,7 +23,17 @@ export interface Product {
   reductionPercentage?: null | any;
 }
 
-export interface ProductState {
-  product: Product;
-  onSlide?: boolean;
+export interface HomePage {
+  title: string;
+  description: string;
+  image: string;
+  productPromo?: Product[] | any;
+}
+
+export interface ProductInterface {
+  _id: any;
+  name: any;
+  price: any;
+  image: any;
+  description: any;
 }

@@ -1,12 +1,12 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
-import PageHeader from "../../../../atoms/PageHeader";
+import PageHeader from "../../../atoms/PageHeader";
 import { FormattedMessage } from "react-intl";
 import { Button } from "@mui/material";
-import CustomTextField from "../../../../atoms/CustomTextField";
+import CustomTextField from "../../../atoms/CustomTextField";
 import { makeStyles } from "@mui/styles";
 import Card from "@mui/material/Card";
-import api from "../../../../../api/apiService";
+import api from "../../../../api/apiService";
 
 export const languageList = [
   { code: "fr", label: "FR" },

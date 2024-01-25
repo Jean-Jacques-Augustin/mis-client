@@ -8,9 +8,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Box } from "@mui/material";
-import PageHeader from "../../../../atoms/PageHeader";
-import CrudButton from "../../../../atoms/CrudButton";
-import { useGetAllCategoryQuery } from "../../../../../store/apiSlice";
+import PageHeader from "../../../atoms/PageHeader";
+import CrudButton from "../../../atoms/CrudButton";
+import { useGetAllCategoryQuery } from "../../../../store/apiSlice";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export default function Categories() {

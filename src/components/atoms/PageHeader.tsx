@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 interface PageHeaderProps {
   title: string;
   buttonLabel: string;
-  buttonColor?: ButtonProps["color"]; // Utilisez le type ButtonProps pour obtenir les options de couleur
+  buttonColor?: ButtonProps["color"];
   buttonOnClick?: () => void;
   to?: any;
 }

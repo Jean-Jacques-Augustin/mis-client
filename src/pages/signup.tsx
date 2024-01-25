@@ -16,11 +16,11 @@ import { FormattedMessage } from "react-intl";
 import { useDispatch } from "react-redux";
 import { setUser } from "../store/userSlice";
 
-interface LoginForm {
+interface signupForm {
   name: string;
   email: string;
   password: string;
-  confirmPassword?: string;
+  confirmPassword: string;
 }
 
 const StyledContainer = styled(Container)`
@@ -51,19 +51,8 @@ const StyledButton = styled(Button)`
   margin-top: 16px;
 `;
 
-const StyledLink = styled(Link)`
-  color: #3f51b5;
-  text-decoration: none;
-  display: inline-block;
-  transition: color 0.3s;
-
-  &:hover {
-    color: #2c3e50;
-  }
-`;
-
 const SignUp: React.FC = () => {
-  const [loginForm, setLoginForm] = useState<LoginForm>({
+  const [signupForm, setSignupForm] = useState<signupForm>({
     name: "",
     email: "",
     password: "",
@@ -79,40 +68,11 @@ const SignUp: React.FC = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setLoginForm((prevLoginForm) => ({ ...prevLoginForm, [name]: value }));
+    setSignupForm((prevsignupForm) => ({ ...prevsignupForm, [name]: value }));
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await api.post("/login", loginForm).then(
-      (response) => {
-        localStorage.setItem("token", response.data.token);
-        const data = response.data.data;
-        const user = data.findUser;
-
-        console.log(user);
-
-        dispatch(
-          setUser({
-            id: user._id,
-            name: user.name,
-            email: user.email,
-            isAdmin: user.role === "admin",
-            profileImage: "",
-            token: data.token,
-            isLogged: true,
-          })
-        );
-        setSnackbarMessage(<FormattedMessage id={"login_success"} />);
-        setSnackbarOpen(true);
-        navigate("/");
-      },
-      (error) => {
-        console.log(error.response.data.message);
-        setSnackbarMessage(error.response.data.message);
-        setSnackbarOpen(true);
-      }
-    );
   };
 
   const handleSnackbarClose = () => {
@@ -132,7 +92,7 @@ const SignUp: React.FC = () => {
                 label={<FormattedMessage id={"name"} />}
                 type="name"
                 name="name"
-                value={loginForm.name}
+                value={signupForm.name}
                 onChange={handleChange}
                 required
               />
@@ -142,17 +102,17 @@ const SignUp: React.FC = () => {
                 label={<FormattedMessage id={"email"} />}
                 type="email"
                 name="email"
-                value={loginForm.email}
+                value={signupForm.email}
                 onChange={handleChange}
                 required
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <CustomTextField
-                label="Mot de passe"
+                label={<FormattedMessage id={"password"} />}
                 type="password"
                 name="password"
-                value={loginForm.password}
+                value={signupForm.password}
                 onChange={handleChange}
                 required
               />
@@ -161,8 +121,8 @@ const SignUp: React.FC = () => {
               <CustomTextField
                 label={<FormattedMessage id={"confirm_password"} />}
                 type="password"
-                name="password"
-                value={loginForm.confirmPassword!!}
+                name="confirmPassword"
+                value={signupForm.confirmPassword}
                 onChange={handleChange}
                 required
               />
@@ -175,7 +135,7 @@ const SignUp: React.FC = () => {
                 color="primary"
                 type="submit"
               >
-                Se connecter
+                <FormattedMessage id={"signup"} />
               </StyledButton>
             </Grid>
             <Grid item xs={12}>
@@ -186,18 +146,9 @@ const SignUp: React.FC = () => {
                   fullWidth
                   style={{ textTransform: "none" }}
                 >
-                  Créer un compte
+                  <FormattedMessage id={"login"} />
                 </Button>
               </Link>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                variant="text"
-                color="inherit"
-                style={{ textTransform: "none" }}
-              >
-                Mot de passe oublié ?
-              </Button>
             </Grid>
           </Grid>
         </StyledForm>

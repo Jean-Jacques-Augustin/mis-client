@@ -1,80 +1,46 @@
 import * as React from "react";
 import {
-    Inbox as InboxIcon,
-    Add as AddIcon,
-    Delete as DeleteIcon,
-    Edit as EditIcon,
-    AccountCircle as AccountCircleIcon,
-    Home as HomeIcon,
-    Settings as SettingsIcon,
-    ShoppingCart as ShoppingCartIcon,
-    Favorite as FavoriteIcon,
-    Notifications as NotificationsIcon,
+  Inbox as InboxIcon,
+  Add as AddIcon,
+  Delete as DeleteIcon,
+  Edit as EditIcon,
+  AccountCircle as AccountCircleIcon,
+  Home as HomeIcon,
+  Settings as SettingsIcon,
+  ShoppingCart as ShoppingCartIcon,
+  Favorite as FavoriteIcon,
+  Notifications as NotificationsIcon,
 } from "@mui/icons-material";
 import CategoryIcon from "@mui/icons-material/Category";
-
+import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import Inventory2Icon from "@mui/icons-material/Inventory2";
 export interface Route {
-    path: string;
-    icon: React.ReactNode;
-    text: string;
+  path: string;
+  icon: React.ReactNode;
+  text: string | React.ReactNode;
 }
 
 const routes: Route[] = [
-    {
-        path: "/",
-        icon: <InboxIcon />,
-        text: "Dashboard",
-    },
-    {
-        path: "/dashboard/category",
-        icon: <CategoryIcon />,
-        text: "Category",
-    },
-    {
-        path: "/addCategory",
-        icon: <AddIcon />,
-        text: "Add",
-    },
-    {
-        path: "/dashboard/product",
-        icon: <DeleteIcon />,
-        text: "Product",
-    },
-    {
-        path: "/edit",
-        icon: <EditIcon />,
-        text: "Edit",
-    },
-    {
-        path: "/account",
-        icon: <AccountCircleIcon />,
-        text: "Account",
-    },
-    {
-        path: "/home",
-        icon: <HomeIcon />,
-        text: "Home",
-    },
-    {
-        path: "/settings",
-        icon: <SettingsIcon />,
-        text: "Settings",
-    },
-    {
-        path: "/cart",
-        icon: <ShoppingCartIcon />,
-        text: "Cart",
-    },
-    {
-        path: "/favorite",
-        icon: <FavoriteIcon />,
-        text: "Favorite",
-    },
-    {
-        path: "/notifications",
-        icon: <NotificationsIcon />,
-        text: "Notifications",
-    },
+  {
+    path: "/",
+    icon: <InboxIcon />,
+    text: "Dashboard",
+  },
+  {
+    path: "/admin/product",
+    icon: <Inventory2Icon />,
+    text: "Products",
+  },
+  {
+    path: "/admin/product",
+    icon: <CategoryIcon />,
+    text: "Categories",
+  },
+  {
+    path: "/admin/product",
+    icon: <ShoppingBasketIcon />,
+    text: "Commandes",
+  },
 ];
 
 export default routes;

@@ -1,4 +1,6 @@
 {
+  "login": "Se connecter",
+  "password": "Mot de passe",
   "signup": "S'inscrire",
   "confirm_password": "Confirmez le mot de passe",
   "login_success": "Connexion réussie",
