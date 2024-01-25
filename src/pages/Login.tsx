@@ -7,10 +7,13 @@ import {
     Typography,
     Snackbar,
 } from "@mui/material";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import CustomTextField from "../components/atoms/CustomTextField";
 import api from "../api/apiService";
+import {FormattedMessage} from "react-intl";
+import {useDispatch} from "react-redux";
+import {setUser} from "../store/userSlice";
 
 interface LoginForm {
     email: string;
@@ -21,24 +24,27 @@ const StyledContainer = styled(Container)`
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 90vh;
     margin: auto;
 `;
 
 const StyledFormBox = styled(Box)`
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 40px;
-    width: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    margin: auto;
+    // center
     display: flex;
     flex-direction: column;
-    align-items: center; /* Ajout pour centrer les liens */
+    align-items: center;
+    justify-content: center !important;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 400px;
+    margin: 50px auto auto;
 `;
 
-const StyledForm = styled.form``;
+const StyledForm = styled.form`
+    border: #ff000e;
+`;
 
 const StyledButton = styled(Button)`
     margin-top: 16px;
@@ -61,8 +67,12 @@ const Login: React.FC = () => {
         password: "",
     });
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [snackbarMessage, setSnackbarMessage] = useState<React.ReactNode | null>(null);
+
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -71,8 +81,34 @@ const Login: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        await api.post("/login", loginForm).then(
+            response => {
+                localStorage.setItem("token", response.data.token);
+                const data = response.data.data;
+                const user = data.findUser;
 
-        // ... (code du handleSubmit)
+                console.log(user)
+
+                dispatch(
+                    setUser({
+                        id: user._id,
+                        name: user.name,
+                        email: user.email,
+                        isAdmin: user.role === "admin",
+                        profileImage: "",
+                        token: data.token,
+                        isLogged: true
+                    }));
+                setSnackbarMessage(<FormattedMessage id={"login_success"}/>);
+                setSnackbarOpen(true);
+                navigate("/");
+            },
+            error => {
+                console.log(error.response.data.message);
+                setSnackbarMessage(error.response.data.message);
+                setSnackbarOpen(true);
+            }
+        )
     };
 
     const handleSnackbarClose = () => {
@@ -110,6 +146,8 @@ const Login: React.FC = () => {
                         <Grid item xs={12}>
                             <StyledButton
                                 variant="contained"
+                                fullWidth
+                                disableElevation
                                 color="primary"
                                 type="submit">
                                 Se connecter
@@ -119,10 +157,12 @@ const Login: React.FC = () => {
                 </StyledForm>
                 <div style={{display: "flex", flexDirection: "column", gap: 8}}>
                     <StyledLink to="/forgot-password">
-                        Mot de passe oublié ?
-                    </StyledLink>
-                    <StyledLink to="/signup">
-                        Pas encore inscrit ? S'inscrire
+                        <Button
+                            variant="text"
+                            color="inherit"
+                            style={{textTransform: "none"}}>
+                            Mot de passe oublié ?
+                        </Button>
                     </StyledLink>
                 </div>
             </StyledFormBox>

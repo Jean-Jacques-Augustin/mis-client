@@ -9,13 +9,8 @@ interface PageHeaderProps {
   buttonLabel: string;
   buttonColor?: ButtonProps["color"]; // Utilisez le type ButtonProps pour obtenir les options de couleur
   buttonOnClick?: () => void;
-  to?: string;
+  to?: any;
 }
-
-// @ts-ignore
-const CustomLink = React.forwardRef<any, Omit<React.ComponentProps<Link>, "to" | "component">>(
-  ({ to, ...props }, ref) => <Link to={to} {...props} ref={ref} />
-);
 
 const PageHeader: React.FC<PageHeaderProps> = ({
   title,
@@ -49,17 +44,17 @@ const PageHeader: React.FC<PageHeaderProps> = ({
           <FormattedMessage id={buttonLabel} />
         </Button>
       ) : (
-        <Button
-          variant="outlined"
-          color={buttonColor}
-          component={CustomLink}
-          to={to}
-          style={{
-            textTransform: "none",
-          }}
-        >
-          <FormattedMessage id={buttonLabel} />
-        </Button>
+        <Link to={to} style={{ textDecoration: "none" }}>
+          <Button
+            variant="outlined"
+            color={buttonColor}
+            style={{
+              textTransform: "none",
+            }}
+          >
+            <FormattedMessage id={buttonLabel} />
+          </Button>
+        </Link>
       )}
     </div>
   );

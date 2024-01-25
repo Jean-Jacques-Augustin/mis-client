@@ -47,9 +47,8 @@ export default function Promo() {
                     borderRadius: "50%",
                     padding: "0.5rem 0.5rem 0.5rem 1.2rem",
                     color: "inherit",
-                    // add hover effect
                     "&:hover": {
-                        color: "blue",
+                        color: "inherit"
                     },
                 }}
             />
@@ -109,15 +108,15 @@ export default function Promo() {
             <Container>
                 <Box>
                     <Typography variant="h4" fontWeight={"600"}>
-                        <FormattedMessage id="promotion" />
+                        <FormattedMessage id="promotion"/>
                     </Typography>
-                    <br />
+                    <br/>
                     <Typography
                         variant={"h6"}
                         className={"text-center text-6xl"}>
-                        <FormattedMessage id="promo_text" />
+                        <FormattedMessage id="promo_text"/>
                     </Typography>
-                    <br />
+                    <br/>
 
                     <Slider {...settings}>
                         {data?.map((products: any) => (

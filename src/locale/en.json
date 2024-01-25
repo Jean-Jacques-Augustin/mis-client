@@ -1,4 +1,9 @@
 {
+    "login_success": "Login successful",
+    "login_error": "Login failed",
+    "profile": "My profile",
+    "logout": "Logout",
+    "Password is not matching": "Password is not matching",
     "greeting": "Hello",
     "product_detail": "Product Detail",
     "product_total": "Total",

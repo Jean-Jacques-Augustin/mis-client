@@ -1,4 +1,7 @@
 {
+    "login_success": "Tafiditra",
+    "login_error": "Misy olana ny fangatahanao",
+    "Password is not matching": "Diso ny teny miafina",
     "greeting": "Manao ahoana",
     "farewell": "Veloma",
     "category": "Sokajy",

@@ -15,6 +15,7 @@ const StyledCard = styled(Card)`
     border-radius: 15px;
     overflow: hidden;
     transition: transform 0.3s ease;
+    min-height: 400px;
 `;
 
 const StyledCardMedia = styled(CardMedia)`
@@ -25,6 +26,7 @@ const CardContentWrapper = styled(CardContent)`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    height: 200px;
 `;
 
 const ProductName = styled(Typography)`
@@ -66,7 +68,7 @@ const ProductCard: React.FC<ProductState> = ({product, onSlide}) => {
             style={{
                 margin: onSlide ? "10px" : "auto",
             }}>
-            <StyledCardMedia image={`${baseURL}/${product.image}`} />
+            <StyledCardMedia image={`${baseURL}/${product.image}`}/>
             <CardContentWrapper>
                 <ProductName gutterBottom variant="h5">
                     {product.name[lang]}

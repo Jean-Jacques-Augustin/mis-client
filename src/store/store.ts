@@ -4,9 +4,11 @@ import storage from "redux-persist/lib/storage"; // Choisissez le type de stocka
 
 import {misApi} from "./apiSlice";
 import cartReducer from "./cartSlice";
+import userReducer from "./userSlice";
 
 const rootReducer = combineReducers({
     cart: cartReducer,
+    user: userReducer,
     [misApi.reducerPath]: misApi.reducer,
 });
 

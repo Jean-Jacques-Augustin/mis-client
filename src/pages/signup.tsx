@@ -42,7 +42,6 @@ const Login: React.FC = () => {
 
             console.log(response.status);
 
-            // Handle successful login here
 
             setSnackbarMessage("Connexion réussie !");
             setSnackbarOpen(true);

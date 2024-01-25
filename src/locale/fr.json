@@ -1,4 +1,9 @@
 {
+    "login_success": "Connexion réussie",
+    "login_error": "Erreur de connexion",
+    "profile": "Mon profil",
+    "logout": "Déconnexion",
+    "Password is not matching": "Le mot de passe ne correspond pas",
     "greeting": "Bonjour",
     "product_detail": "Détails du produit",
     "product_total": "Total du produit",
