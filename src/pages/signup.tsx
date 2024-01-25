@@ -1,135 +1,216 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
-    Box,
-    Button,
-    Container,
-    Grid,
-    Typography,
-    Snackbar,
+  Box,
+  Button,
+  Container,
+  Grid,
+  Typography,
+  Snackbar,
+  Card,
 } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import CustomTextField from "../components/atoms/CustomTextField";
 import api from "../api/apiService";
+import { FormattedMessage } from "react-intl";
+import { useDispatch } from "react-redux";
+import { setUser } from "../store/userSlice";
 
 interface LoginForm {
-    email: string;
-    password: string;
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword?: string;
 }
 
-const Login: React.FC = () => {
-    const [loginForm, setLoginForm] = useState<LoginForm>({
-        email: "",
-        password: "",
-    });
+const StyledContainer = styled(Container)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  margin: auto;
+`;
 
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState("");
+const StyledFormBox = styled(Card)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center !important;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 5px;
+  max-width: 500px;
+  margin: 50px auto;
+`;
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = event.target;
-        setLoginForm(prevLoginForm => ({...prevLoginForm, [name]: value}));
-    };
+const StyledForm = styled.form`
+  border: #ff000e;
+`;
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+const StyledButton = styled(Button)`
+  margin-top: 16px;
+`;
 
-        const {email, password} = loginForm;
+const StyledLink = styled(Link)`
+  color: #3f51b5;
+  text-decoration: none;
+  display: inline-block;
+  transition: color 0.3s;
 
-        try {
-            const response = await api.post("/login", {
-                email,
-                password,
-            });
+  &:hover {
+    color: #2c3e50;
+  }
+`;
 
-            console.log(response.status);
+const SignUp: React.FC = () => {
+  const [loginForm, setLoginForm] = useState<LoginForm>({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-            setSnackbarMessage("Connexion réussie !");
-            setSnackbarOpen(true);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] =
+    useState<React.ReactNode | null>(null);
 
-            // Reset login form (optional)
-            setLoginForm({
-                email: "",
-                password: "",
-            });
-        } catch (error: any) {
-            console.log(error.response.status);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setLoginForm((prevLoginForm) => ({ ...prevLoginForm, [name]: value }));
+  };
 
-            if (error.response.status === 401) {
-                console.log(error.response.data);
-                setSnackbarMessage(error.response.data.message);
-            }
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    await api.post("/login", loginForm).then(
+      (response) => {
+        localStorage.setItem("token", response.data.token);
+        const data = response.data.data;
+        const user = data.findUser;
 
-            setSnackbarOpen(true);
-        }
-    };
+        console.log(user);
 
-    const handleSnackbarClose = () => {
-        setSnackbarOpen(false);
-    };
-
-    return (
-        <Container maxWidth="md">
-            <Grid
-                container
-                justifyContent="center"
-                alignItems="center"
-                style={{height: "100vh"}}>
-                <Grid item xs={12} md={6}>
-                    <Box
-                        display="flex"
-                        flexDirection="column"
-                        alignItems="center"
-                        border="1px solid grey"
-                        width={500}
-                        borderRadius="4px"
-                        p={3}>
-                        <Typography variant="h5" gutterBottom>
-                            Connexion
-                        </Typography>
-                        <form onSubmit={handleSubmit} style={{width: "100%"}}>
-                            <Grid container spacing={2}>
-                                <Grid item xs={12} md={12}>
-                                    <CustomTextField
-                                        label="Adresse Email"
-                                        type="email"
-                                        name="email"
-                                        value={loginForm.email}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </Grid>
-                                <Grid item xs={12} md={12}>
-                                    <CustomTextField
-                                        label="Mot de passe"
-                                        type="password"
-                                        name="password"
-                                        value={loginForm.password}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                                style={{marginTop: 16}}>
-                                Se connecter
-                            </Button>
-                        </form>
-                    </Box>
-                </Grid>
-            </Grid>
-
-            <Snackbar
-                open={snackbarOpen}
-                autoHideDuration={6000}
-                onClose={handleSnackbarClose}
-                message={snackbarMessage}
-            />
-        </Container>
+        dispatch(
+          setUser({
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.role === "admin",
+            profileImage: "",
+            token: data.token,
+            isLogged: true,
+          })
+        );
+        setSnackbarMessage(<FormattedMessage id={"login_success"} />);
+        setSnackbarOpen(true);
+        navigate("/");
+      },
+      (error) => {
+        console.log(error.response.data.message);
+        setSnackbarMessage(error.response.data.message);
+        setSnackbarOpen(true);
+      }
     );
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
+  return (
+    <StyledContainer>
+      <StyledFormBox variant="outlined">
+        <Typography variant="h5" gutterBottom>
+          <FormattedMessage id={"signup"} />
+        </Typography>
+        <StyledForm onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={12}>
+              <CustomTextField
+                label={<FormattedMessage id={"name"} />}
+                type="name"
+                name="name"
+                value={loginForm.name}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <CustomTextField
+                label={<FormattedMessage id={"email"} />}
+                type="email"
+                name="email"
+                value={loginForm.email}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <CustomTextField
+                label="Mot de passe"
+                type="password"
+                name="password"
+                value={loginForm.password}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <CustomTextField
+                label={<FormattedMessage id={"confirm_password"} />}
+                type="password"
+                name="password"
+                value={loginForm.confirmPassword!!}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <StyledButton
+                variant="contained"
+                fullWidth
+                disableElevation
+                color="primary"
+                type="submit"
+              >
+                Se connecter
+              </StyledButton>
+            </Grid>
+            <Grid item xs={12}>
+              <Link to="/signup">
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  fullWidth
+                  style={{ textTransform: "none" }}
+                >
+                  Créer un compte
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                variant="text"
+                color="inherit"
+                style={{ textTransform: "none" }}
+              >
+                Mot de passe oublié ?
+              </Button>
+            </Grid>
+          </Grid>
+        </StyledForm>
+        <div style={{ display: "flex", flexDirection: "column" }}></div>
+      </StyledFormBox>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        message={snackbarMessage}
+      />
+    </StyledContainer>
+  );
 };
 
-export default Login;
+export default SignUp;
