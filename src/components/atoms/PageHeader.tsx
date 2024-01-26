@@ -29,12 +29,12 @@ const PageHeader: React.FC<PageHeaderProps> = ({
         marginBottom: "20px",
       }}
     >
-      <Typography variant="h5" align="left">
+      <Typography variant='h5' align='left'>
         <FormattedMessage id={title} />
       </Typography>
       {buttonOnClick ? (
         <Button
-          variant="outlined"
+          variant='outlined'
           color={buttonColor}
           onClick={buttonOnClick}
           style={{
@@ -46,7 +46,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
       ) : (
         <Link to={to} style={{ textDecoration: "none" }}>
           <Button
-            variant="outlined"
+            variant='outlined'
             color={buttonColor}
             style={{
               textTransform: "none",

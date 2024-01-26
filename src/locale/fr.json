@@ -1,4 +1,6 @@
 {
+  "price": "Prix",
+  "quantity": "Quantité",
   "login": "Se connecter",
   "password": "Mot de passe",
   "signup": "S'inscrire",

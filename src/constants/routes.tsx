@@ -27,17 +27,17 @@ const routes: Route[] = [
     text: "Dashboard",
   },
   {
-    path: "/admin/product",
+    path: "/dashboard/product",
     icon: <Inventory2Icon />,
     text: "Products",
   },
   {
-    path: "/admin/product",
+    path: "/dashboard/product",
     icon: <CategoryIcon />,
     text: "Categories",
   },
   {
-    path: "/admin/product",
+    path: "/dashboard/product",
     icon: <ShoppingBasketIcon />,
     text: "Commandes",
   },

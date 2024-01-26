@@ -1,4 +1,6 @@
 {
+  "price": "Price",
+  "quantity": "Quantity",
   "login": "Login",
   "password": "Password",
   "email": "Address email",

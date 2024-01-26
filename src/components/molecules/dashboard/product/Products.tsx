@@ -18,10 +18,10 @@ const ProductListPage: React.FC = () => {
   return (
     <Box>
       <PageHeader
-        title="products"
-        buttonLabel="add_product"
-        buttonColor="primary"
-        to="/dashboard/addProduct"
+        title='products'
+        buttonLabel='add_product'
+        buttonColor='primary'
+        to='/dashboard/addProduct'
       />
 
       {products.data.map((product: any) => (

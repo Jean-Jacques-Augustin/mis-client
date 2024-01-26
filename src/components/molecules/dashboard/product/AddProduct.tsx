@@ -96,23 +96,28 @@ const AddProduct: React.FC = () => {
     const productData = new FormData();
 
     // Convert the name and category fields to JSON and append to the FormData
-    productData.append("name", JSON.stringify(name));
+    productData.append("name[fr]", name.fr);
+    productData.append("name[en]", name.en);
+    productData.append("name[mg]", name.mg);
     productData.append("category", category);
-
-    // Append the form data to the FormData object for description, price, image, and quantity
-    productData.append("description", JSON.stringify(description));
-    productData.append("price", price.toString());
-    productData.append("image", image || ""); // Use empty string as fallback if image is null
+    productData.append("description[fr]", description.fr);
+    productData.append("description[en]", description.en);
+    productData.append("description[mg]", description.mg);
     productData.append("quantity", quantity.toString());
+    productData.append("price", price.toString());
+    if (image) {
+      productData.append("image", image as Blob);
+    }
+
+    console.log("productData", productData);
 
     try {
       const response = await api.post("/products", productData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token")} `,
         },
       });
-
-      console.log(response);
       showSnackbar("Product created successfully", "success");
     } catch (error) {
       console.error(error);
@@ -166,7 +171,7 @@ const AddProduct: React.FC = () => {
       <PageHeader title={"add_product"} buttonLabel={"return"} />
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h6" align="left">
+          <Typography variant='h6' align='left'>
             <FormattedMessage id={"name"} />
           </Typography>
           <Card variant={"outlined"} sx={{ p: 2 }}>
@@ -174,7 +179,7 @@ const AddProduct: React.FC = () => {
               <CustomTextField
                 key={language.code}
                 label={`Name (${language.label})`}
-                type="name"
+                type='name'
                 name={`name-${language.code}`}
                 value={formData.name[language.code]}
                 onChange={handleChange}
@@ -184,7 +189,7 @@ const AddProduct: React.FC = () => {
           </Card>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h6" align="left">
+          <Typography variant='h6' align='left'>
             <FormattedMessage id={"description"} />
           </Typography>
           <Card variant={"outlined"} sx={{ p: 2 }}>
@@ -203,9 +208,9 @@ const AddProduct: React.FC = () => {
         </Grid>
         <Grid item xs={12}>
           <CustomTextField
-            label="Price"
-            name="price"
-            type="number"
+            label='Price'
+            name='price'
+            type='number'
             value={formData.price.toString()}
             onChange={handleChange}
             required
@@ -215,7 +220,7 @@ const AddProduct: React.FC = () => {
           <FormControl fullWidth required>
             <InputLabel>Category</InputLabel>
             <Select
-              name="category"
+              name='category'
               value={formData.category}
               onChange={(event) =>
                 handleChange(
@@ -226,7 +231,7 @@ const AddProduct: React.FC = () => {
                 )
               }
             >
-              <MenuItem value="category1">Sans catégorie</MenuItem>
+              <MenuItem value='category1'>Sans catégorie</MenuItem>
               {categories.data.map((category: any) => (
                 <MenuItem value={category._id}>
                   {category.description[locale]}
@@ -252,18 +257,18 @@ const AddProduct: React.FC = () => {
             {image ? (
               <img
                 src={URL.createObjectURL(image)}
-                alt="Selected Image"
-                className="w-full mx-auto mb-2"
+                alt='Selected Image'
+                className='w-full mx-auto mb-2'
               />
             ) : (
-              <p className="text-gray-500">
+              <p className='text-gray-500'>
                 Drag and drop an image here or click to select an image
               </p>
             )}
             <input
               ref={fileInputRef}
-              type="file"
-              accept="image/*"
+              type='file'
+              accept='image/*'
               onChange={handleImageChange}
               style={{
                 opacity: 0,
@@ -276,9 +281,9 @@ const AddProduct: React.FC = () => {
         </Grid>
         <Grid item xs={12}>
           <CustomTextField
-            label="Quantity"
-            name="quantity"
-            type="number"
+            label='Quantity'
+            name='quantity'
+            type='number'
             value={formData.quantity.toString()}
             onChange={handleChange}
             required
@@ -292,7 +297,7 @@ const AddProduct: React.FC = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <Button type="submit" variant="contained" color="primary">
+          <Button type='submit' variant='contained' color='primary'>
             Submit
           </Button>
         </Grid>
@@ -302,7 +307,7 @@ const AddProduct: React.FC = () => {
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
       >
-        <MuiAlert elevation={6} variant="filled" severity={snackbarSeverity}>
+        <MuiAlert elevation={6} variant='filled' severity={snackbarSeverity}>
           {snackbarMessage}
         </MuiAlert>
       </Snackbar>

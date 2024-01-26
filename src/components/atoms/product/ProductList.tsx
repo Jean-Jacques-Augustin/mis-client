@@ -11,6 +11,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Product } from "../../../interfaces/ProductInterface";
 import { Edit } from "@mui/icons-material";
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const ProductImage = styled.img`
   width: 300px;
@@ -81,39 +82,49 @@ const ProductList: React.FC<{ product: Product }> = ({ product }) => {
       variant={"outlined"}
     >
       <ProductImage
-        crossOrigin="anonymous"
+        crossOrigin='anonymous'
         src={`${baseURL}/${product.image}`}
         alt={product.name[locale]}
       />
       <ProductInfo>
-        <ProductName variant="h6">
+        <ProductName variant='h6'>
           <FormattedMessage id={"name"} />: {name[locale]}
         </ProductName>
-        <ProductDescription variant="body1">
+        <ProductDescription variant='body1'>
           <b>
             <FormattedMessage id={"description"} />:
           </b>{" "}
           {description[locale]}
         </ProductDescription>
-        <ProductPrice variant="body1">
+        <ProductPrice variant='body1'>
           <b>
             <FormattedMessage id={"price"} />:
           </b>{" "}
           ${price}
         </ProductPrice>
-        <ProductQuantity variant="body2">Quantity: {quantity}</ProductQuantity>
+        <ProductQuantity variant='body2'>
+          <FormattedMessage id={"quantity"} />:{quantity}
+        </ProductQuantity>
         <div
           style={{
             display: "flex",
             gap: "10px",
           }}
         >
-          <Button variant={"contained"} color={"primary"} startIcon={<Edit />}>
-            <FormattedMessage id={"edit"} />
-          </Button>
-          <Button variant={"outlined"} color={"primary"} startIcon={<Edit />}>
-            <FormattedMessage id={"delete"} />
-          </Button>
+          <Link to={`/dashboard/editProduct/${product._id}`}>
+            <Button
+              variant={"contained"}
+              color={"primary"}
+              startIcon={<Edit />}
+            >
+              <FormattedMessage id={"edit"} />
+            </Button>
+          </Link>
+          <Link to={`/dashboard/delete/${product._id}`}>
+            <Button variant={"outlined"} color={"primary"} startIcon={<Edit />}>
+              <FormattedMessage id={"delete"} />
+            </Button>
+          </Link>
         </div>
       </ProductInfo>
     </Card>
