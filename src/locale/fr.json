@@ -1,4 +1,9 @@
 {
+  "catalog": "Catalogue de produits",
+  "mis": "MÍS EPICES DE MADAGASCAR",
+  "users": "Utilisateurs",
+  "return_to_home": "Returner à l'accueil",
+  "dashboard": "Tableau de bord",
   "price": "Prix",
   "quantity": "Quantité",
   "login": "Se connecter",

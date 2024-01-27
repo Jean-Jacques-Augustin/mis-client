@@ -1,68 +1,118 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import SearchBar from "../components/molecules/SearchBar";
-import { CircularProgress, Container, Grid } from "@mui/material";
-import { useGetAllProductQuery } from "../store/apiSlice";
+import {CircularProgress, Container, Grid, Pagination} from "@mui/material";
+import {useGetAllProductQuery} from "../store/apiSlice";
 import ProductCard from "../components/atoms/product/ProductCard";
 import styled from "styled-components";
+import {useState} from "react";
+import {FormattedMessage} from "react-intl";
 
 export const PageTitle = styled(Typography)`
-  font-weight: 600;
-  font-size: 1.3rem;
-  margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
 `;
 
 export default function Catalog() {
-  const { data: products, isLoading, error } = useGetAllProductQuery();
+    const {data: products, isLoading, error} = useGetAllProductQuery();
 
-  console.log("products", products);
+    const [page, setPage] = useState(1);
 
-  if (isLoading) {
+    console.log("products", products);
+
+    if (isLoading) {
+        return (
+            <Box sx={{display: "flex", justifyContent: "center", mt: 3}}>
+                <CircularProgress/>
+            </Box>
+        );
+    }
+
+    if (error) {
+        return <div>Error: {"message" in error ? error.message : "Erreur"}</div>;
+    }
+
+
+    const itemPerPage = 12;
+
+    const pageNumbers = Math.ceil(products?.data.length / itemPerPage);
+
+    const indexOfLastItem = page * itemPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemPerPage;
+    const currentItems = products?.data.slice(indexOfFirstItem, indexOfLastItem);
+
+
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-        <CircularProgress />
-      </Box>
+        <Container>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "start",
+                    alignItems: "start",
+                    height: "100%",
+                    gap: "10px",
+                    minHeight: "88vh"
+                }}
+            >
+
+
+                <Grid
+                    container
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <Grid item xs={12} md={6}>
+                        <Typography
+                            align={"left"}
+                            variant="h4">
+                            <FormattedMessage id="catalog"/>
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <SearchBar
+                            placeholder="Rechercher..."
+                            onSearch={() => {
+                                console.log("Recherche...");
+                            }}
+                        />
+                    </Grid>
+                </Grid>
+                <br/>
+                <Grid
+                    container
+                    direction="row"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    {currentItems.map((product: any) => (
+                        <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
+                            <ProductCard key={product.id} product={product}/>
+                        </Grid>
+                    ))}
+                </Grid>
+            </div>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "10px",
+                    margin: "20px 0"
+                }}
+            >
+                <Pagination
+                    page={page}
+                    count={pageNumbers}
+                    shape="rounded"
+                    onChange={(event, value) => setPage(value)}
+                />
+            </div>
+        </Container>
     );
-  }
-  if (error) {
-    return <div>Error: {"message" in error ? error.message : "Erreur"}</div>;
-  }
-  return (
-    <Container>
-      <br />
-      <Grid
-        container
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        spacing={2}
-      >
-        <Grid item xs={12} md={6}>
-          <Typography variant="h4">Catalogue de produits</Typography>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <SearchBar
-            placeholder="Rechercher..."
-            onSearch={() => {
-              console.log("Recherche...");
-            }}
-          />
-        </Grid>
-      </Grid>
-      <br />
-      <Grid
-        container
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        spacing={2}
-      >
-        {products?.data.map((product: any) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
-            <ProductCard key={product.id} product={product} />
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
-  );
 }

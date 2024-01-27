@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import Index from "./pages";
 import Navigation from "./components/molecules/Navigation";
-import {Routes, Route} from "react-router-dom";
+import {Routes, Route, Navigate, useNavigate} from "react-router-dom";
 import SignUp from "./pages/signup";
 import EmailConfirmation from "./pages/confirm";
 import Dashboard from "./pages/dashboard";
@@ -16,9 +16,17 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/cart";
 import Toolbar from "@mui/material/Toolbar";
 import EditProducts from "./components/molecules/dashboard/product/editProducts";
+import Users from "./components/molecules/dashboard/users";
+import Stat from "./components/molecules/dashboard/stat";
+import {useSelector} from "react-redux";
+import {RootState} from "./store/store";
+import NotFound from "./components/molecules/error/notFound";
 
 function App() {
     const isDashboard = window.location.pathname.includes("dashboard");
+    const isConnected = useSelector((state: RootState) => state.user.user.isLogged);
+    const isAdmin = useSelector((state: RootState) => state.user.user.isAdmin);
+    const navigate = useNavigate();
 
     return (
         <div className='App'>
@@ -32,14 +40,19 @@ function App() {
                 <Route path='/product/:id' element={<ProductDetail/>}/>
                 <Route path='/catalogue' element={<Catalog/>}/>
                 <Route path='/cart' element={<Cart/>}/>
-                <Route path='/dashboard' element={<Dashboard/>}>
-                    <Route path='*' element={<h1>Dashboard</h1>}/>
-                    <Route path='category' element={<Categories/>}/>
-                    <Route path='addCategory' element={<AddCategory/>}/>
-                    <Route path='product' element={<ProductListPage/>}/>
-                    <Route path='editProduct/:id' element={<EditProducts/>}/>
-                    <Route path='addProduct' element={<AddProduct/>}/>
-                </Route>
+                {
+                    isConnected && isAdmin ?
+                        <Route path='/dashboard' element={<Dashboard/>}>
+                            <Route path='' element={<Stat/>}/>
+                            <Route path='category' element={<Categories/>}/>
+                            <Route path='addCategory' element={<AddCategory/>}/>
+                            <Route path='product' element={<ProductListPage/>}/>
+                            <Route path='product/add' element={<AddProduct/>}/>
+                            <Route path='editProduct/:id' element={<EditProducts/>}/>
+                            <Route path='users' element={<Users/>}/>
+                        </Route>
+                        : <Route path='/dashboard' element={<NotFound/>}/>
+                }
             </Routes>
         </div>
     );

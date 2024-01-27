@@ -1,4 +1,9 @@
 {
+  "catalog": "Product Catalogue",
+  "mis": "MÍS SPICES OF MADAGASCAR",
+  "users": "Users",
+  "return_to_home": "Return to home",
+  "dashboard": "Dashboard",
   "price": "Price",
   "quantity": "Quantity",
   "login": "Login",
