@@ -7,12 +7,13 @@ import {IntlProvider} from "react-intl";
 import fr from "./locale/fr.json";
 import en from "./locale/en.json";
 import mg from "./locale/mg.json";
-import {store} from "./store/store";
+import {persistor, store} from "./store/store";
 import {Provider} from "react-redux";
 import {createRoot} from "react-dom/client";
 import {ThemeProvider} from "@mui/material";
 import {theme} from "./theme";
 import {PersistGate} from "redux-persist/integration/react";
+import {persistStore} from "redux-persist";
 
 function getShortLocaleFromPathname(pathname: string) {
     const [shortLocale] = pathname.slice(1).split("/"); // Extract the language code from the pathname
@@ -42,17 +43,18 @@ const root = createRoot(document.getElementById("root")!);
 root.render(
     <React.StrictMode>
         <Provider store={store}>
-
-            <IntlProvider
-                locale={languageFromPathname}
-                messages={messages as Record<string, string>}
-                defaultLocale={"fr"}>
-                <BrowserRouter basename={`/${languageFromPathname}`}>
-                    <ThemeProvider theme={theme}>
-                        <App/>
-                    </ThemeProvider>
-                </BrowserRouter>
-            </IntlProvider>
+            <PersistGate persistor={persistor}>
+                <IntlProvider
+                    locale={languageFromPathname}
+                    messages={messages as Record<string, string>}
+                    defaultLocale={"fr"}>
+                    <BrowserRouter basename={`/${languageFromPathname}`}>
+                        <ThemeProvider theme={theme}>
+                            <App/>
+                        </ThemeProvider>
+                    </BrowserRouter>
+                </IntlProvider>
+            </PersistGate>
         </Provider>
     </React.StrictMode>,
 );

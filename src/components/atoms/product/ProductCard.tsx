@@ -26,6 +26,7 @@ const CardContentWrapper = styled(CardContent)`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: space-between;
     height: 200px;
 `;
 
@@ -73,7 +74,8 @@ const ProductCard: React.FC<ProductState> = ({product, onSlide}) => {
                     {product.description[lang]}
                 </ProductDescription>
                 <ProductPrice variant="body2" color="text.secondary">
-                    Price: ${product.price}
+                    <FormattedMessage id={"price"}/>:{" "}
+                    {product.price} Ariary
                 </ProductPrice>
             </CardContentWrapper>
             <StyledCardActions>
