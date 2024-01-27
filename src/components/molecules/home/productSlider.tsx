@@ -9,6 +9,7 @@ import { baseURL } from "../../../api/apiService";
 import { Button, Container, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import LoadingPage from "../../../pages/LoadingPage";
 
 const useStyles = makeStyles((theme) => ({
   slide: {
@@ -73,7 +74,7 @@ const ProductSlider: React.FC = () => {
   const intl = useIntl();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingPage />;
   }
 
   if (error) {

@@ -1,18 +1,12 @@
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import SearchBar from "../components/molecules/SearchBar";
-import {CircularProgress, Container, Grid, Pagination} from "@mui/material";
+import {Container, Grid, Pagination} from "@mui/material";
 import {useGetAllProductQuery} from "../store/apiSlice";
 import ProductCard from "../components/atoms/product/ProductCard";
-import styled from "styled-components";
-import {useState} from "react";
+import React, {useState} from "react";
 import {FormattedMessage} from "react-intl";
+import LoadingPage from "./LoadingPage";
 
-export const PageTitle = styled(Typography)`
-    font-weight: 600;
-    font-size: 1.3rem;
-    margin-bottom: 10px;
-`;
 
 export default function Catalog() {
     const {data: products, isLoading, error} = useGetAllProductQuery();
@@ -22,9 +16,9 @@ export default function Catalog() {
 
     if (isLoading) {
         return (
-            <Box sx={{display: "flex", justifyContent: "center", mt: 3}}>
-                <CircularProgress/>
-            </Box>
+            <LoadingPage
+                size={"large"}
+            />
         );
     }
 
