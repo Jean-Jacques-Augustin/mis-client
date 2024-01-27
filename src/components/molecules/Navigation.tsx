@@ -115,9 +115,6 @@ export default function Navigation() {
                             <StyledLink to={"/catalogue"}>
                                 <FormattedMessage id="catalog"/>
                             </StyledLink>
-                            <StyledLink to={"/catalogue"}>
-                                <FormattedMessage id="contact"/>
-                            </StyledLink>
                         </div>
                     </Hidden>
 

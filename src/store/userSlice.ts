@@ -9,6 +9,7 @@ export interface UserSliceInterface {
     token: string;
     isLogged: boolean;
     profileImage: string;
+    confirmationEmail: string;
 }
 
 interface InitialState {
@@ -24,6 +25,7 @@ const initialState: InitialState = {
         token: '',
         isLogged: false,
         profileImage: '',
+        confirmationEmail: "",
     } as UserSliceInterface,
 };
 
@@ -46,9 +48,14 @@ const userSlice = createSlice({
             if (state.user) {
                 state.user.isLogged = action.payload;
             }
+        },
+        addConfirmationEmail: (state, action: PayloadAction<string>) => {
+            if (state.user) {
+                state.user.confirmationEmail = action.payload;
+            }
         }
     },
 });
 
-export const {setUser, clearUser, updateStatus, updateProfileImage} = userSlice.actions;
+export const {setUser, clearUser, updateStatus, updateProfileImage, addConfirmationEmail} = userSlice.actions;
 export default userSlice.reducer;

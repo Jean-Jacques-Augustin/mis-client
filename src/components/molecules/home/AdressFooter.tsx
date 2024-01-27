@@ -3,35 +3,43 @@ import {Container, Grid} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {FormattedMessage} from "react-intl";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import {GoogleMap, LoadScript, Marker} from "@react-google-maps/api";
+import InstagramIcon from '@mui/icons-material/Instagram';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import MailIcon from '@mui/icons-material/Mail';
 
 const socialNetworks = [
     {
         name: "Facebook",
-        icon: <FacebookIcon style={{fontSize: "2rem"}} />,
-        userName: "lebonnetrouge",
-        url: "https://www.facebook.com/lebonnetrouge",
-    },
-    {
-        name: "Twitter",
-        userName: "lebonnetrouge",
-        icon: <TwitterIcon style={{fontSize: "2rem"}} />,
-        url: "https://www.twitter.com/lebonnetrouge",
+        icon: <FacebookIcon style={{fontSize: "2rem"}}/>,
+        userName: "MÍS Epices de Madagascar",
+        url: "https://web.facebook.com/profile.php?id=100095674056399",
     },
     {
         name: "Linkedin",
-        userName: "lebonnetrouge",
-        icon: <LinkedInIcon style={{fontSize: "2rem"}} />,
-        url: "https://www.linkedin.com/lebonnetrouge",
+        userName: "MÍS Epices de Madagascar",
+        icon: <LinkedInIcon style={{fontSize: "2rem"}}/>,
+        url: "https://www.linkedin.com/company/m%C3%ADs-epices-de-madagascar/",
     },
     {
         name: "Instagram",
-        userName: "lebonnetrouge",
-        icon: <LinkedInIcon style={{fontSize: "2rem"}} />,
-        url: "https://www.linkedin.com/lebonnetrouge",
+        userName: "MÍS Epices de Madagascar",
+        icon: <InstagramIcon style={{fontSize: "2rem"}}/>,
+        url: "https://www.instagram.com/mis_epices_de_madagascar/",
     },
+    {
+        name: "Téléphone",
+        userName: "+261 34 05 336 14",
+        icon: <LocalPhoneIcon style={{fontSize: "2rem"}}/>,
+        url: "tel:+261340533614",
+    },
+    {
+        name: "Email",
+        userName: "contact@misfianarantsoa.com",
+        icon: <MailIcon style={{fontSize: "2rem"}}/>,
+        url: "mailto:contact@misfianarantsoa.com",
+    }
 ];
 
 export default function AdressInfo() {
@@ -56,7 +64,7 @@ export default function AdressInfo() {
                     spacing={2}>
                     <Grid item xs={12} md={12}>
                         <Typography variant="h4" fontWeight={"600"}>
-                            <FormattedMessage id={"contact_us"} />
+                            <FormattedMessage id={"contact_us"}/>
                         </Typography>
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -98,7 +106,7 @@ export default function AdressInfo() {
                                 mapContainerStyle={containerStyle}
                                 center={center}
                                 zoom={15}>
-                                <Marker position={center} />
+                                <Marker position={center}/>
                             </GoogleMap>
                         </LoadScript>
                     </Grid>

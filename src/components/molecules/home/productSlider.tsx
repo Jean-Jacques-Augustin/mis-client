@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import { useGetAllProductQuery } from "../../../store/apiSlice";
-import { useIntl } from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -128,7 +128,7 @@ const ProductSlider: React.FC = () => {
                   textTransform: "none",
                 }}
               >
-                Voir plus
+                <FormattedMessage id='view_product' />
               </Button>
             </div>
           </div>

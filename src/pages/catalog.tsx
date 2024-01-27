@@ -16,10 +16,9 @@ export const PageTitle = styled(Typography)`
 
 export default function Catalog() {
     const {data: products, isLoading, error} = useGetAllProductQuery();
-
+    const [searchQuery, setSearchQuery] = useState("");
     const [page, setPage] = useState(1);
-
-    console.log("products", products);
+    const locale = "fr";
 
     if (isLoading) {
         return (
@@ -33,14 +32,17 @@ export default function Catalog() {
         return <div>Error: {"message" in error ? error.message : "Erreur"}</div>;
     }
 
-
     const itemPerPage = 12;
 
-    const pageNumbers = Math.ceil(products?.data.length / itemPerPage);
+    const filteredProducts = products?.data.filter((product: any) =>
+        product.name[locale].toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const pageNumbers = Math.ceil(filteredProducts?.length / itemPerPage);
 
     const indexOfLastItem = page * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = products?.data.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = filteredProducts?.slice(indexOfFirstItem, indexOfLastItem);
 
 
     return (
@@ -53,11 +55,10 @@ export default function Catalog() {
                     alignItems: "start",
                     height: "100%",
                     gap: "10px",
-                    minHeight: "88vh"
+                    minHeight: "88vh",
+                    marginTop: "20px"
                 }}
             >
-
-
                 <Grid
                     container
                     direction="row"
@@ -75,9 +76,7 @@ export default function Catalog() {
                     <Grid item xs={12} md={4}>
                         <SearchBar
                             placeholder="Rechercher..."
-                            onSearch={() => {
-                                console.log("Recherche...");
-                            }}
+                            onSearch={(query) => setSearchQuery(query)}
                         />
                     </Grid>
                 </Grid>

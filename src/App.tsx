@@ -21,6 +21,7 @@ import Stat from "./components/molecules/dashboard/stat";
 import {useSelector} from "react-redux";
 import {RootState} from "./store/store";
 import NotFound from "./components/molecules/error/notFound";
+import Footer from "./components/molecules/home/Footer";
 
 function App() {
     const isDashboard = window.location.pathname.includes("dashboard");
@@ -54,6 +55,9 @@ function App() {
                         : <Route path='/dashboard' element={<NotFound/>}/>
                 }
             </Routes>
+            {
+                !isDashboard ? <Footer/> : null
+            }
         </div>
     );
 }
