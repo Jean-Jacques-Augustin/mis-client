@@ -1,4 +1,4 @@
-import {Box, Container, Grid, Typography} from "@mui/material";
+import {Box, Container, Grid, Hidden, Typography} from "@mui/material";
 import {FormattedMessage} from "react-intl";
 
 const QuiSommmes = () => {
@@ -12,15 +12,19 @@ const QuiSommmes = () => {
                 justifyContent: "center",
             }}>
             <Container>
+                <Hidden mdUp>
+                    <br/>
+                    <br/>
+                </Hidden>
                 <Typography variant="h5" fontWeight={"700"}>
-                    <FormattedMessage id="about" />
+                    <FormattedMessage id="about"/>
                 </Typography>
-                <br />
+                <br/>
                 <Typography
                     variant={"body1"}
                     align={"justify"}
                     color="text.secondary">
-                    <FormattedMessage id="about_text" />
+                    <FormattedMessage id="about_text"/>
                 </Typography>
             </Container>
         </Box>
