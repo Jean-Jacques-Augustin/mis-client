@@ -72,6 +72,13 @@ const SignUp: React.FC = () => {
     };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+
+        if (signupForm.password !== signupForm.confirmPassword) {
+            setSnackbarMessage("Password and confirm password must be the same");
+            setSnackbarOpen(true);
+            return;
+        }
+
         const data = {
             name: signupForm.name,
             email: signupForm.email,
